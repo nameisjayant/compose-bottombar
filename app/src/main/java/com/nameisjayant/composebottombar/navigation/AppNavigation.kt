@@ -17,6 +17,7 @@ import com.nameisjayant.composebottombar.dome.DomeBottomBarDemo
 import com.nameisjayant.composebottombar.halo.HaloBottomBarDemo
 import com.nameisjayant.composebottombar.home.BottomBarType
 import com.nameisjayant.composebottombar.home.HomeScreen
+import com.nameisjayant.composebottombar.socket.SocketBottomBarDemo
 import com.nameisjayant.composebottombar.valley.ValleyBottomBarDemo
 import kotlinx.serialization.Serializable
 
@@ -26,12 +27,14 @@ import kotlinx.serialization.Serializable
 @Serializable data object DomeDemoRoute : NavKey
 @Serializable data object CradleDemoRoute : NavKey
 @Serializable data object ValleyDemoRoute : NavKey
+@Serializable data object SocketDemoRoute : NavKey
 
 private fun BottomBarType.route(): NavKey = when (this) {
     BottomBarType.Halo -> HaloDemoRoute
     BottomBarType.Dome -> DomeDemoRoute
     BottomBarType.Cradle -> CradleDemoRoute
     BottomBarType.Valley -> ValleyDemoRoute
+    BottomBarType.Socket -> SocketDemoRoute
 }
 
 @Composable
@@ -70,6 +73,9 @@ fun AppNavigation(darkTheme: Boolean, onDarkThemeChange: (Boolean) -> Unit) {
             }
             entry<ValleyDemoRoute> {
                 ValleyBottomBarDemo(darkTheme = darkTheme, onDarkThemeChange = onDarkThemeChange)
+            }
+            entry<SocketDemoRoute> {
+                SocketBottomBarDemo(darkTheme = darkTheme, onDarkThemeChange = onDarkThemeChange)
             }
         },
     )

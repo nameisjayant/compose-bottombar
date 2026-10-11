@@ -76,11 +76,25 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
   </tr>
 </table>
 
+<table>
+  <tr>
+    <th colspan="2">Socket BottomBar</th>
+  </tr>
+  <tr>
+    <td align="center" width="50%">☀️ Light</td>
+    <td align="center" width="50%">🌙 Dark</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/gifs/socket-light.gif" width="400" alt="Socket bottom bar in light theme, switching between tabs" /></td>
+    <td valign="top"><img src="docs/gifs/socket-dark.gif" width="400" alt="Socket bottom bar in dark theme, switching between tabs" /></td>
+  </tr>
+</table>
+
 ## Features
 
 - 🎯 **Ready to use**: pass a list of items and the selected index, and you get a finished bar.
 - 🌗 **Light and dark built in**: every bar ships both palettes and follows the system theme by default.
-- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple or the Valley's orb press.
+- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press or the Socket's gliding bubble.
 - 🎨 **Customizable**: change any color through `XxxBottomBarDefaults.lightColors(...)` / `darkColors(...)`, plus label style and window insets.
 - ♿ **Accessible**: items are exposed as selectable tabs in a selectable group, so TalkBack reads them correctly.
 - 🪶 **Light dependencies**: only Compose UI, Foundation and Animation. No Material, icons or navigation library is forced on your app.
@@ -94,6 +108,7 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
 | **Dome** | `DomeBottomBar` | A floating, rounded bar whose top edge swells into a dome around a glowing orb. Icon-only tabs; the selected one fills in and its label slides up underneath |
 | **Cradle** | `CradleBottomBar` | A flat bar whose top edge dips into a smooth notch that cradles a raised orb. Icons and labels always show; the selected tab fills in and turns the accent color, and a ring ripples out of the orb when it is selected |
 | **Valley** | `ValleyBottomBar` | A bar whose whole top edge sags in one smooth curve, with a glowing orb resting in the low point. Icons and labels always show; when the orb is selected it presses into the valley, which sinks with it and springs back |
+| **Socket** | `SocketBottomBar` | A floating pill where the selected icon lifts out of the bar into a bubble, resting in a socket cut into the top edge. Works with any number of tabs; the bubble and its socket glide from tab to tab |
 
 More bars are on the way.
 
@@ -328,6 +343,39 @@ Colors come from `ValleyBottomBarDefaults.colors(darkTheme)`, `lightColors(...)`
 | `unselectedLabelColor` | Labels of the other side tabs |
 | `orbColor` | Fill of the center orb and its glow |
 | `orbContentColor` | Icon inside the orb |
+
+### Socket bottom bar
+
+`SocketBarItem` works like the others, but there is no center orb: **any tab can be selected into the bubble**, so pass any number of items (3 to 5 fit best). Every tab shows its label; the selected one's icon lifts into the bubble as its `selectedIcon`, and its label takes `selectedContentColor`.
+
+```kotlin
+val items = listOf(
+    SocketBarItem("Home", Icons.Outlined.Home, Icons.Filled.Home),
+    SocketBarItem("Search", Icons.Outlined.Search, Icons.Filled.Search),
+    SocketBarItem("Cart", Icons.Outlined.ShoppingCart, Icons.Filled.ShoppingCart),
+    SocketBarItem("Profile", Icons.Outlined.Person, Icons.Filled.Person),
+)
+
+SocketBottomBar(
+    items = items,
+    selectedIndex = selectedIndex,
+    onItemClick = { selectedIndex = it },
+    // A floating pill, so keep it off the screen edges.
+    modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+)
+```
+
+The pill is `BarHeight` (72dp) tall and the 52dp bubble (`BubbleSize`) rises `BubbleOverhang` (23dp) above it, all inside the bar's own bounds. The socket is shaped by `SocketGap` (the see-through ring around the bubble) and `SocketShoulderRadius`, and `ContentPadding` sets the space between the rounded ends and the outer tabs. The bar has no outer margin of its own, so pass one through `modifier`. As with the other cut-out bars, `shadowElevation` defaults to `0.dp` and needs API 30+ because of the concave outline.
+
+Colors come from `SocketBottomBarDefaults.colors(darkTheme)`, `lightColors(...)` and `darkColors(...)`:
+
+| Color | Used for |
+|---|---|
+| `containerColor` | The pill background |
+| `bubbleColor` | Fill of the bubble; matches `containerColor` by default |
+| `selectedContentColor` | Icon inside the bubble and the selected tab's label |
+| `unselectedContentColor` | Icons of the other tabs |
+| `unselectedLabelColor` | Labels of the other tabs |
 
 ### With Navigation 3
 

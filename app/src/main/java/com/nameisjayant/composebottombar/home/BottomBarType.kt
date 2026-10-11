@@ -18,4 +18,8 @@ enum class BottomBarType(val title: String, val description: String) {
         title = "ValleyBottomBar",
         description = "Bar whose whole top edge sags in one curve under a glowing orb, which presses into the valley when selected.",
     ),
+    Socket(
+        title = "SocketBottomBar",
+        description = "Floating pill whose selected icon lifts into a bubble, resting in a socket that glides from tab to tab.",
+    ),
 }

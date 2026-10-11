@@ -27,6 +27,9 @@ import com.nameisjayant.bottombar.dome.DomeBottomBarDefaults
 import com.nameisjayant.bottombar.halo.HaloBarItem
 import com.nameisjayant.bottombar.halo.HaloBottomBar
 import com.nameisjayant.bottombar.halo.HaloBottomBarDefaults
+import com.nameisjayant.bottombar.socket.SocketBarItem
+import com.nameisjayant.bottombar.socket.SocketBottomBar
+import com.nameisjayant.bottombar.socket.SocketBottomBarDefaults
 import com.nameisjayant.bottombar.valley.ValleyBarItem
 import com.nameisjayant.bottombar.valley.ValleyBottomBar
 import com.nameisjayant.bottombar.valley.ValleyBottomBarDefaults
@@ -69,6 +72,11 @@ class RecordBottomBarGifs {
     private val cradleItems = haloItems.map { CradleBarItem(it.label, it.icon, it.selectedIcon) }
 
     private val valleyItems = haloItems.map { ValleyBarItem(it.label, it.icon, it.selectedIcon) }
+
+    // Socket has no center orb, so it uses the four tabs it was designed with.
+    private val socketItems = haloItems
+        .filter { it.label != "Store" }
+        .map { SocketBarItem(it.label, it.icon, it.selectedIcon) }
 
     @Test
     fun haloLight() = recordHalo(darkTheme = false)
@@ -145,9 +153,33 @@ class RecordBottomBarGifs {
         }
     }
 
+    @Test
+    fun socketLight() = recordSocket(darkTheme = false)
+
+    @Test
+    fun socketDark() = recordSocket(darkTheme = true)
+
+    private fun recordSocket(darkTheme: Boolean) {
+        record(
+            name = if (darkTheme) "socket-dark" else "socket-light",
+            darkTheme = darkTheme,
+            tour = listOf(0, 1, 2, 3, 1, 0),
+        ) { selectedIndex, onItemClick ->
+            SocketBottomBar(
+                items = socketItems,
+                selectedIndex = selectedIndex,
+                onItemClick = onItemClick,
+                modifier = Modifier.padding(start = 14.dp, end = 14.dp, bottom = 14.dp),
+                colors = SocketBottomBarDefaults.colors(darkTheme),
+                windowInsets = WindowInsets(0.dp),
+            )
+        }
+    }
+
     private fun record(
         name: String,
         darkTheme: Boolean,
+        tour: List<Int> = TOUR,
         bar: @Composable (selectedIndex: Int, onItemClick: (Int) -> Unit) -> Unit,
     ) {
         assumeTrue("Pass -PbottomBarGifDir to record GIF frames", outputDir != null)
@@ -155,7 +187,7 @@ class RecordBottomBarGifs {
             deleteRecursively()
             mkdirs()
         }
-        var selected by mutableIntStateOf(TOUR.first())
+        var selected by mutableIntStateOf(tour.first())
         var frame = 0
         fun capture(durationMillis: Long) {
             repeat((durationMillis / FRAME_MILLIS).toInt()) {
@@ -180,7 +212,7 @@ class RecordBottomBarGifs {
             }
         }
         capture(HOLD_MILLIS)
-        TOUR.drop(1).forEach { index ->
+        tour.drop(1).forEach { index ->
             selected = index
             capture(STEP_MILLIS)
         }

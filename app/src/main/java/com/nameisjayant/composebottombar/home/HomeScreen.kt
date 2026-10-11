@@ -42,6 +42,9 @@ import com.nameisjayant.bottombar.dome.DomeBottomBarDefaults
 import com.nameisjayant.bottombar.halo.HaloBarItem
 import com.nameisjayant.bottombar.halo.HaloBottomBar
 import com.nameisjayant.bottombar.halo.HaloBottomBarDefaults
+import com.nameisjayant.bottombar.socket.SocketBarItem
+import com.nameisjayant.bottombar.socket.SocketBottomBar
+import com.nameisjayant.bottombar.socket.SocketBottomBarDefaults
 import com.nameisjayant.bottombar.valley.ValleyBarItem
 import com.nameisjayant.bottombar.valley.ValleyBottomBar
 import com.nameisjayant.bottombar.valley.ValleyBottomBarDefaults
@@ -167,6 +170,13 @@ private fun BottomBarPreview(type: BottomBarType, darkTheme: Boolean, onClick: (
             colors = ValleyBottomBarDefaults.colors(darkTheme),
             windowInsets = WindowInsets(0.dp),
         )
+        BottomBarType.Socket -> SocketBottomBar(
+            items = SocketPreviewItems,
+            selectedIndex = 0,
+            onItemClick = { onClick() },
+            colors = SocketBottomBarDefaults.colors(darkTheme),
+            windowInsets = WindowInsets(0.dp),
+        )
     }
 }
 
@@ -183,3 +193,8 @@ private val DomePreviewItems = HaloPreviewItems.map { DomeBarItem(it.label, it.i
 private val CradlePreviewItems = HaloPreviewItems.map { CradleBarItem(it.label, it.icon, it.selectedIcon) }
 
 private val ValleyPreviewItems = HaloPreviewItems.map { ValleyBarItem(it.label, it.icon, it.selectedIcon) }
+
+// Socket has no center orb, so it skips Store and shows the four tabs it was designed with.
+private val SocketPreviewItems = HaloPreviewItems
+    .filter { it.label != "Store" }
+    .map { SocketBarItem(it.label, it.icon, it.selectedIcon) }
