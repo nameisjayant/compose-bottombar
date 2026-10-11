@@ -54,6 +54,9 @@ import com.nameisjayant.bottombar.halo.HaloBottomBarDefaults
 import com.nameisjayant.bottombar.rail.RailBarItem
 import com.nameisjayant.bottombar.rail.RailBottomBar
 import com.nameisjayant.bottombar.rail.RailBottomBarDefaults
+import com.nameisjayant.bottombar.scribble.ScribbleBarItem
+import com.nameisjayant.bottombar.scribble.ScribbleBottomBar
+import com.nameisjayant.bottombar.scribble.ScribbleBottomBarDefaults
 import com.nameisjayant.bottombar.socket.SocketBarItem
 import com.nameisjayant.bottombar.socket.SocketBottomBar
 import com.nameisjayant.bottombar.socket.SocketBottomBarDefaults
@@ -228,6 +231,13 @@ private fun BottomBarPreview(type: BottomBarType, darkTheme: Boolean, onClick: (
             colors = CrestBottomBarDefaults.colors(darkTheme),
             windowInsets = WindowInsets(0.dp),
         )
+        BottomBarType.Scribble -> ScribbleBottomBar(
+            items = ScribblePreviewItems,
+            selectedIndex = 0,
+            onItemClick = { onClick() },
+            colors = ScribbleBottomBarDefaults.colors(darkTheme),
+            windowInsets = WindowInsets(0.dp),
+        )
     }
 }
 
@@ -265,3 +275,8 @@ private val RailPreviewItems = HaloPreviewItems
     .map { RailBarItem(it.label, it.icon, it.selectedIcon) }
 
 private val CrestPreviewItems = HaloPreviewItems.map { CrestBarItem(it.label, it.icon, it.selectedIcon) }
+
+// Scribble was designed with four outline-only tabs, so it skips Store and the filled icons.
+private val ScribblePreviewItems = HaloPreviewItems
+    .filter { it.label != "Store" }
+    .map { ScribbleBarItem(it.label, it.icon) }

@@ -42,4 +42,8 @@ enum class BottomBarType(val title: String, val description: String) {
         title = "CrestBottomBar",
         description = "Floating bar whose two wings climb towards a glowing orb resting in a socket between them.",
     ),
+    Scribble(
+        title = "ScribbleBottomBar",
+        description = "Flat bar of icon-only tabs; a hand-drawn loop draws itself around the selected icon, with a dot underneath.",
+    ),
 }

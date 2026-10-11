@@ -160,11 +160,25 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
   </tr>
 </table>
 
+<table>
+  <tr>
+    <th colspan="2">Scribble BottomBar</th>
+  </tr>
+  <tr>
+    <td align="center" width="50%">☀️ Light</td>
+    <td align="center" width="50%">🌙 Dark</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/gifs/scribble-light.gif" width="400" alt="Scribble bottom bar in light theme, switching between tabs" /></td>
+    <td valign="top"><img src="docs/gifs/scribble-dark.gif" width="400" alt="Scribble bottom bar in dark theme, switching between tabs" /></td>
+  </tr>
+</table>
+
 ## Features
 
 - 🎯 **Ready to use**: pass a list of items and the selected index, and you get a finished bar.
 - 🌗 **Light and dark built in**: every bar ships both palettes and follows the system theme by default.
-- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press, the Socket's gliding bubble, the Gable's bubble sliding along its roof line, the Diamond's quarter-turn spin, the Wave's rings filling into solid orbs, the Rail's rails growing around the selected tab or the Crest's orb popping up as its wings dip.
+- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press, the Socket's gliding bubble, the Gable's bubble sliding along its roof line, the Diamond's quarter-turn spin, the Wave's rings filling into solid orbs, the Rail's rails growing around the selected tab, the Crest's orb popping up as its wings dip or the Scribble's loop drawing itself around the selected icon.
 - 🎨 **Customizable**: change any color through `XxxBottomBarDefaults.lightColors(...)` / `darkColors(...)`, plus label style and window insets.
 - ♿ **Accessible**: items are exposed as selectable tabs in a selectable group, so TalkBack reads them correctly.
 - 🪶 **Light dependencies**: only Compose UI, Foundation and Animation. No Material, icons or navigation library is forced on your app.
@@ -184,6 +198,7 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
 | **Wave** | `WaveBottomBar` | A flat bar whose top edge rolls in a wave, with every tab floating in its own dip. Unselected tabs show their icon in a thin ring; the selected ring springs into a solid orb with a filled icon, and its label turns the accent color |
 | **Rail** | `RailBottomBar` | A flat bar of icon-only tabs. The selected tab widens to show its label beside a filled icon, and two thin accent rails grow out from its center, one above and one below |
 | **Crest** | `CrestBottomBar` | A floating bar split into two wings whose top edges climb towards the center, where a glowing orb rests in a round socket between them. Icons and labels always show; when the orb is selected it pops up out of the socket while the wings dip under it |
+| **Scribble** | `ScribbleBottomBar` | A flat bar of icon-only tabs. The selected icon darkens and a hand-drawn accent loop draws itself around it, overshooting its start like a quick pen stroke, before a small dot pops in underneath |
 
 More bars are on the way.
 
@@ -615,6 +630,36 @@ Colors come from `CrestBottomBarDefaults.colors(darkTheme)`, `lightColors(...)` 
 | `unselectedLabelColor` | Labels of the other side tabs |
 | `orbColor` | Fill of the center orb and its glow |
 | `orbContentColor` | Icon inside the orb |
+
+### Scribble bottom bar
+
+`ScribbleBarItem` has no center item: any tab can be selected, and every slot gets the same width. The bar only shows icons, so `label` is read out by TalkBack. `selectedIcon` defaults to `icon`, as in the original design the loop and the darker tint already mark the selection, but you can pass a filled twin.
+
+```kotlin
+val items = listOf(
+    ScribbleBarItem("Home", Icons.Outlined.Home),
+    ScribbleBarItem("Wallet", Icons.Outlined.AccountBalanceWallet),
+    ScribbleBarItem("Stats", Icons.Outlined.PieChart),
+    ScribbleBarItem("Profile", Icons.Outlined.Person),
+)
+
+ScribbleBottomBar(
+    items = items,
+    selectedIndex = selectedIndex,
+    onItemClick = { selectedIndex = it },
+)
+```
+
+The bar is `BarHeight` (68dp) tall. The loop is `ScribbleSize` (42dp) across with a `ScribbleStrokeWidth` (2dp) stroke, and the `DotSize` (4dp) dot sits `DotGap` (3dp) under it. When a tab is selected the loop draws itself in while turning into place, the dot pops in as it closes, and the loop of the previous tab fades out.
+
+Colors come from `ScribbleBottomBarDefaults.colors(darkTheme)`, `lightColors(...)` and `darkColors(...)`:
+
+| Color | Used for |
+|---|---|
+| `containerColor` | The bar background |
+| `selectedContentColor` | Icon of the selected tab |
+| `unselectedContentColor` | Icons of the other tabs |
+| `scribbleColor` | The loop and the dot under the selected tab |
 
 ### With Navigation 3
 

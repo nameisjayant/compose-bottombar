@@ -21,6 +21,7 @@ import com.nameisjayant.composebottombar.halo.HaloBottomBarDemo
 import com.nameisjayant.composebottombar.home.BottomBarType
 import com.nameisjayant.composebottombar.home.HomeScreen
 import com.nameisjayant.composebottombar.rail.RailBottomBarDemo
+import com.nameisjayant.composebottombar.scribble.ScribbleBottomBarDemo
 import com.nameisjayant.composebottombar.socket.SocketBottomBarDemo
 import com.nameisjayant.composebottombar.valley.ValleyBottomBarDemo
 import com.nameisjayant.composebottombar.wave.WaveBottomBarDemo
@@ -38,6 +39,7 @@ import kotlinx.serialization.Serializable
 @Serializable data object WaveDemoRoute : NavKey
 @Serializable data object RailDemoRoute : NavKey
 @Serializable data object CrestDemoRoute : NavKey
+@Serializable data object ScribbleDemoRoute : NavKey
 
 private fun BottomBarType.route(): NavKey = when (this) {
     BottomBarType.Halo -> HaloDemoRoute
@@ -50,6 +52,7 @@ private fun BottomBarType.route(): NavKey = when (this) {
     BottomBarType.Wave -> WaveDemoRoute
     BottomBarType.Rail -> RailDemoRoute
     BottomBarType.Crest -> CrestDemoRoute
+    BottomBarType.Scribble -> ScribbleDemoRoute
 }
 
 @Composable
@@ -106,6 +109,9 @@ fun AppNavigation(darkTheme: Boolean, onDarkThemeChange: (Boolean) -> Unit) {
             }
             entry<CrestDemoRoute> {
                 CrestBottomBarDemo(darkTheme = darkTheme, onDarkThemeChange = onDarkThemeChange)
+            }
+            entry<ScribbleDemoRoute> {
+                ScribbleBottomBarDemo(darkTheme = darkTheme, onDarkThemeChange = onDarkThemeChange)
             }
         },
     )
