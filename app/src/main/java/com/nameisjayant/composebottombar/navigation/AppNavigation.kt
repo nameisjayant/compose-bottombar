@@ -13,6 +13,7 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import com.nameisjayant.composebottombar.cradle.CradleBottomBarDemo
+import com.nameisjayant.composebottombar.crest.CrestBottomBarDemo
 import com.nameisjayant.composebottombar.diamond.DiamondBottomBarDemo
 import com.nameisjayant.composebottombar.dome.DomeBottomBarDemo
 import com.nameisjayant.composebottombar.gable.GableBottomBarDemo
@@ -36,6 +37,7 @@ import kotlinx.serialization.Serializable
 @Serializable data object DiamondDemoRoute : NavKey
 @Serializable data object WaveDemoRoute : NavKey
 @Serializable data object RailDemoRoute : NavKey
+@Serializable data object CrestDemoRoute : NavKey
 
 private fun BottomBarType.route(): NavKey = when (this) {
     BottomBarType.Halo -> HaloDemoRoute
@@ -47,6 +49,7 @@ private fun BottomBarType.route(): NavKey = when (this) {
     BottomBarType.Diamond -> DiamondDemoRoute
     BottomBarType.Wave -> WaveDemoRoute
     BottomBarType.Rail -> RailDemoRoute
+    BottomBarType.Crest -> CrestDemoRoute
 }
 
 @Composable
@@ -100,6 +103,9 @@ fun AppNavigation(darkTheme: Boolean, onDarkThemeChange: (Boolean) -> Unit) {
             }
             entry<RailDemoRoute> {
                 RailBottomBarDemo(darkTheme = darkTheme, onDarkThemeChange = onDarkThemeChange)
+            }
+            entry<CrestDemoRoute> {
+                CrestBottomBarDemo(darkTheme = darkTheme, onDarkThemeChange = onDarkThemeChange)
             }
         },
     )

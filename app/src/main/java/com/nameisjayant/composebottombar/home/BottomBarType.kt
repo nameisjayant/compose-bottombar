@@ -38,4 +38,8 @@ enum class BottomBarType(val title: String, val description: String) {
         title = "RailBottomBar",
         description = "Flat bar of icon-only tabs; the selected one widens to show its label, framed by two rails above and below.",
     ),
+    Crest(
+        title = "CrestBottomBar",
+        description = "Floating bar whose two wings climb towards a glowing orb resting in a socket between them.",
+    ),
 }

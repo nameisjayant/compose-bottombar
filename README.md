@@ -146,11 +146,25 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
   </tr>
 </table>
 
+<table>
+  <tr>
+    <th colspan="2">Crest BottomBar</th>
+  </tr>
+  <tr>
+    <td align="center" width="50%">☀️ Light</td>
+    <td align="center" width="50%">🌙 Dark</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/gifs/crest-light.gif" width="400" alt="Crest bottom bar in light theme, switching between tabs" /></td>
+    <td valign="top"><img src="docs/gifs/crest-dark.gif" width="400" alt="Crest bottom bar in dark theme, switching between tabs" /></td>
+  </tr>
+</table>
+
 ## Features
 
 - 🎯 **Ready to use**: pass a list of items and the selected index, and you get a finished bar.
 - 🌗 **Light and dark built in**: every bar ships both palettes and follows the system theme by default.
-- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press, the Socket's gliding bubble, the Gable's bubble sliding along its roof line, the Diamond's quarter-turn spin, the Wave's rings filling into solid orbs or the Rail's rails growing around the selected tab.
+- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press, the Socket's gliding bubble, the Gable's bubble sliding along its roof line, the Diamond's quarter-turn spin, the Wave's rings filling into solid orbs, the Rail's rails growing around the selected tab or the Crest's orb popping up as its wings dip.
 - 🎨 **Customizable**: change any color through `XxxBottomBarDefaults.lightColors(...)` / `darkColors(...)`, plus label style and window insets.
 - ♿ **Accessible**: items are exposed as selectable tabs in a selectable group, so TalkBack reads them correctly.
 - 🪶 **Light dependencies**: only Compose UI, Foundation and Animation. No Material, icons or navigation library is forced on your app.
@@ -169,6 +183,7 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
 | **Diamond** | `DiamondBottomBar` | A flat bar with a glowing diamond centered on its top edge. Icons and labels always show; the selected tab fills in and turns the accent color, and the diamond spins a quarter turn into place when it is selected |
 | **Wave** | `WaveBottomBar` | A flat bar whose top edge rolls in a wave, with every tab floating in its own dip. Unselected tabs show their icon in a thin ring; the selected ring springs into a solid orb with a filled icon, and its label turns the accent color |
 | **Rail** | `RailBottomBar` | A flat bar of icon-only tabs. The selected tab widens to show its label beside a filled icon, and two thin accent rails grow out from its center, one above and one below |
+| **Crest** | `CrestBottomBar` | A floating bar split into two wings whose top edges climb towards the center, where a glowing orb rests in a round socket between them. Icons and labels always show; when the orb is selected it pops up out of the socket while the wings dip under it |
 
 More bars are on the way.
 
@@ -565,6 +580,41 @@ Colors come from `RailBottomBarDefaults.colors(darkTheme)`, `lightColors(...)` a
 | `selectedContentColor` | Icon and label of the selected tab |
 | `railColor` | The two rails framing the selected tab |
 | `unselectedContentColor` | Icons of the other tabs |
+
+### Crest bottom bar
+
+`CrestBarItem` follows the same rules as Valley: the **middle item becomes the orb** resting in the socket between the wings, so pass an odd number of items. Every side tab shows its icon and label; the selected one switches to its `selectedIcon` and takes `selectedContentColor`.
+
+```kotlin
+val items = listOf(
+    CrestBarItem("Home", Icons.Outlined.Home, Icons.Filled.Home),
+    CrestBarItem("Search", Icons.Outlined.Search, Icons.Filled.Search),
+    CrestBarItem("Store", Icons.Outlined.Storefront, Icons.Filled.Storefront), // the orb
+    CrestBarItem("Cart", Icons.Outlined.ShoppingCart, Icons.Filled.ShoppingCart),
+    CrestBarItem("Profile", Icons.Outlined.Person, Icons.Filled.Person),
+)
+
+CrestBottomBar(
+    items = items,
+    selectedIndex = selectedIndex,
+    onItemClick = { selectedIndex = it },
+    // The bar floats, so keep it off the screen edges.
+    modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+)
+```
+
+The bar is `BarHeight` (68dp) tall at its outer ends, and each wing climbs `WingRise` (20dp) towards the center. The 54dp orb (`OrbSize`) rises `OrbOverhang` (6dp) above the point where the wings would meet, sits in a socket `SocketGap` (6dp) wider than itself, and casts a glow in its own color (`OrbElevation`). `SocketShoulderRadius`, `TopCornerRadius` and `BottomCornerRadius` round off the shape. When the orb is selected it pops up 8dp, so leave a little room above the bar. As with Valley, `shadowElevation` defaults to `0.dp` and needs API 30+ because of the concave outline.
+
+Colors come from `CrestBottomBarDefaults.colors(darkTheme)`, `lightColors(...)` and `darkColors(...)`:
+
+| Color | Used for |
+|---|---|
+| `containerColor` | The bar background |
+| `selectedContentColor` | Icon and label of the selected side tab |
+| `unselectedContentColor` | Icons of the other side tabs |
+| `unselectedLabelColor` | Labels of the other side tabs |
+| `orbColor` | Fill of the center orb and its glow |
+| `orbContentColor` | Icon inside the orb |
 
 ### With Navigation 3
 

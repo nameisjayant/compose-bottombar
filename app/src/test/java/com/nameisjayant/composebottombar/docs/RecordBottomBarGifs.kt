@@ -21,6 +21,9 @@ import androidx.compose.ui.unit.dp
 import com.nameisjayant.bottombar.cradle.CradleBarItem
 import com.nameisjayant.bottombar.cradle.CradleBottomBar
 import com.nameisjayant.bottombar.cradle.CradleBottomBarDefaults
+import com.nameisjayant.bottombar.crest.CrestBarItem
+import com.nameisjayant.bottombar.crest.CrestBottomBar
+import com.nameisjayant.bottombar.crest.CrestBottomBarDefaults
 import com.nameisjayant.bottombar.diamond.DiamondBarItem
 import com.nameisjayant.bottombar.diamond.DiamondBottomBar
 import com.nameisjayant.bottombar.diamond.DiamondBottomBarDefaults
@@ -103,6 +106,8 @@ class RecordBottomBarGifs {
     private val railItems = haloItems
         .filter { it.label != "Store" }
         .map { RailBarItem(it.label, it.icon, it.selectedIcon) }
+
+    private val crestItems = haloItems.map { CrestBarItem(it.label, it.icon, it.selectedIcon) }
 
     @Test
     fun haloLight() = recordHalo(darkTheme = false)
@@ -282,6 +287,30 @@ class RecordBottomBarGifs {
                 selectedIndex = selectedIndex,
                 onItemClick = onItemClick,
                 colors = RailBottomBarDefaults.colors(darkTheme),
+                windowInsets = WindowInsets(0.dp),
+            )
+        }
+    }
+
+    @Test
+    fun crestLight() = recordCrest(darkTheme = false)
+
+    @Test
+    fun crestDark() = recordCrest(darkTheme = true)
+
+    private fun recordCrest(darkTheme: Boolean) {
+        record(
+            name = if (darkTheme) "crest-dark" else "crest-light",
+            darkTheme = darkTheme,
+            tour = listOf(0, 1, 2, 3, 4, 2, 0),
+        ) { selectedIndex, onItemClick ->
+            CrestBottomBar(
+                items = crestItems,
+                selectedIndex = selectedIndex,
+                onItemClick = onItemClick,
+                // Room above the bar for the orb to pop up into.
+                modifier = Modifier.padding(start = 14.dp, top = 10.dp, end = 14.dp, bottom = 14.dp),
+                colors = CrestBottomBarDefaults.colors(darkTheme),
                 windowInsets = WindowInsets(0.dp),
             )
         }

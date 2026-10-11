@@ -36,6 +36,9 @@ import androidx.lifecycle.compose.dropUnlessResumed
 import com.nameisjayant.bottombar.cradle.CradleBarItem
 import com.nameisjayant.bottombar.cradle.CradleBottomBar
 import com.nameisjayant.bottombar.cradle.CradleBottomBarDefaults
+import com.nameisjayant.bottombar.crest.CrestBarItem
+import com.nameisjayant.bottombar.crest.CrestBottomBar
+import com.nameisjayant.bottombar.crest.CrestBottomBarDefaults
 import com.nameisjayant.bottombar.diamond.DiamondBarItem
 import com.nameisjayant.bottombar.diamond.DiamondBottomBar
 import com.nameisjayant.bottombar.diamond.DiamondBottomBarDefaults
@@ -217,6 +220,14 @@ private fun BottomBarPreview(type: BottomBarType, darkTheme: Boolean, onClick: (
             colors = RailBottomBarDefaults.colors(darkTheme),
             windowInsets = WindowInsets(0.dp),
         )
+        BottomBarType.Crest -> CrestBottomBar(
+            items = CrestPreviewItems,
+            selectedIndex = 0,
+            onItemClick = { onClick() },
+            modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
+            colors = CrestBottomBarDefaults.colors(darkTheme),
+            windowInsets = WindowInsets(0.dp),
+        )
     }
 }
 
@@ -252,3 +263,5 @@ private val WavePreviewItems = HaloPreviewItems
 private val RailPreviewItems = HaloPreviewItems
     .filter { it.label != "Store" }
     .map { RailBarItem(it.label, it.icon, it.selectedIcon) }
+
+private val CrestPreviewItems = HaloPreviewItems.map { CrestBarItem(it.label, it.icon, it.selectedIcon) }
