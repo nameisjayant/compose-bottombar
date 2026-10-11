@@ -118,11 +118,25 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
   </tr>
 </table>
 
+<table>
+  <tr>
+    <th colspan="2">Wave BottomBar</th>
+  </tr>
+  <tr>
+    <td align="center" width="50%">☀️ Light</td>
+    <td align="center" width="50%">🌙 Dark</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/gifs/wave-light.gif" width="400" alt="Wave bottom bar in light theme, switching between tabs" /></td>
+    <td valign="top"><img src="docs/gifs/wave-dark.gif" width="400" alt="Wave bottom bar in dark theme, switching between tabs" /></td>
+  </tr>
+</table>
+
 ## Features
 
 - 🎯 **Ready to use**: pass a list of items and the selected index, and you get a finished bar.
 - 🌗 **Light and dark built in**: every bar ships both palettes and follows the system theme by default.
-- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press, the Socket's gliding bubble, the Gable's bubble sliding along its roof line or the Diamond's quarter-turn spin.
+- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press, the Socket's gliding bubble, the Gable's bubble sliding along its roof line the Diamond's quarter-turn spin or the Wave's rings filling into solid orbs.
 - 🎨 **Customizable**: change any color through `XxxBottomBarDefaults.lightColors(...)` / `darkColors(...)`, plus label style and window insets.
 - ♿ **Accessible**: items are exposed as selectable tabs in a selectable group, so TalkBack reads them correctly.
 - 🪶 **Light dependencies**: only Compose UI, Foundation and Animation. No Material, icons or navigation library is forced on your app.
@@ -139,6 +153,7 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
 | **Socket** | `SocketBottomBar` | A floating pill where the selected icon lifts out of the bar into a bubble, resting in a socket cut into the top edge. Works with any number of tabs; the bubble and its socket glide from tab to tab |
 | **Gable** | `GableBottomBar` | A floating bar whose top edge rises like a roof to a peak in the middle. The selected icon lifts into a bubble resting in a socket cut into the slope, and both glide along the roof line from tab to tab |
 | **Diamond** | `DiamondBottomBar` | A flat bar with a glowing diamond centered on its top edge. Icons and labels always show; the selected tab fills in and turns the accent color, and the diamond spins a quarter turn into place when it is selected |
+| **Wave** | `WaveBottomBar` | A flat bar whose top edge rolls in a wave, with every tab floating in its own dip. Unselected tabs show their icon in a thin ring; the selected ring springs into a solid orb with a filled icon, and its label turns the accent color |
 
 More bars are on the way.
 
@@ -474,6 +489,37 @@ Colors come from `DiamondBottomBarDefaults.colors(darkTheme)`, `lightColors(...)
 | `diamondColor` | Fill of the diamond |
 | `diamondContentColor` | Icon inside the diamond |
 | `diamondGlowColor` | Colored shadow glowing around the diamond |
+
+### Wave bottom bar
+
+`WaveBarItem` has no center orb: **every tab gets its own dip and orb**, and any tab can be selected. Slots share the width equally, so 3 or 4 items look best (3 fit the design); with more, the crests between dips get sharper. Unselected tabs show `icon` inside a ring; the selected one fills in and shows `selectedIcon`.
+
+```kotlin
+val items = listOf(
+    WaveBarItem("Home", Icons.Outlined.Home, Icons.Filled.Home),
+    WaveBarItem("Cart", Icons.Outlined.ShoppingCart, Icons.Filled.ShoppingCart),
+    WaveBarItem("Profile", Icons.Outlined.Person, Icons.Filled.Person),
+)
+
+WaveBottomBar(
+    items = items,
+    selectedIndex = selectedIndex,
+    onItemClick = { selectedIndex = it },
+)
+```
+
+Every orb is `OrbSize` (48dp) wide and sits in a dip that leaves an `OrbGap` (4.5dp) gap around it, so the page behind the bar shows through as a thin outline. The crests between dips rise level with the orbs' middle, and the body under them is `BarHeight` (67dp) tall, with its background extending under the navigation bar. Pass `shadowElevation` for a shadow (API 30+, since the outline is concave).
+
+Colors come from `WaveBottomBarDefaults.colors(darkTheme)`, `lightColors(...)` and `darkColors(...)`:
+
+| Color | Used for |
+|---|---|
+| `containerColor` | The bar background |
+| `selectedOrbColor` | Fill of the selected tab's orb |
+| `selectedContentColor` | Icon and label of the selected tab |
+| `ringColor` | Ring around unselected orbs |
+| `unselectedContentColor` | Icons of the other tabs |
+| `unselectedLabelColor` | Labels of the other tabs |
 
 ### With Navigation 3
 

@@ -30,4 +30,8 @@ enum class BottomBarType(val title: String, val description: String) {
         title = "DiamondBottomBar",
         description = "Flat bar with a glowing diamond on its top edge, which spins a quarter turn into place when selected.",
     ),
+    Wave(
+        title = "WaveBottomBar",
+        description = "Bar with a rolling wave edge: every tab floats in its own dip, and the selected ring fills into a solid orb.",
+    ),
 }

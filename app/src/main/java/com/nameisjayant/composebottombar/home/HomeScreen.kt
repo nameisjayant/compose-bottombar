@@ -54,6 +54,9 @@ import com.nameisjayant.bottombar.socket.SocketBottomBarDefaults
 import com.nameisjayant.bottombar.valley.ValleyBarItem
 import com.nameisjayant.bottombar.valley.ValleyBottomBar
 import com.nameisjayant.bottombar.valley.ValleyBottomBarDefaults
+import com.nameisjayant.bottombar.wave.WaveBarItem
+import com.nameisjayant.bottombar.wave.WaveBottomBar
+import com.nameisjayant.bottombar.wave.WaveBottomBarDefaults
 import com.nameisjayant.composebottombar.halo.ShopIcons
 
 /** Catalog of every bottom bar. Tapping a card opens that bar's full demo. */
@@ -197,6 +200,13 @@ private fun BottomBarPreview(type: BottomBarType, darkTheme: Boolean, onClick: (
             colors = DiamondBottomBarDefaults.colors(darkTheme),
             windowInsets = WindowInsets(0.dp),
         )
+        BottomBarType.Wave -> WaveBottomBar(
+            items = WavePreviewItems,
+            selectedIndex = 0,
+            onItemClick = { onClick() },
+            colors = WaveBottomBarDefaults.colors(darkTheme),
+            windowInsets = WindowInsets(0.dp),
+        )
     }
 }
 
@@ -222,3 +232,8 @@ private val SocketPreviewItems = HaloPreviewItems
 private val GablePreviewItems = HaloPreviewItems.map { GableBarItem(it.label, it.icon, it.selectedIcon) }
 
 private val DiamondPreviewItems = HaloPreviewItems.map { DiamondBarItem(it.label, it.icon, it.selectedIcon) }
+
+// Wave gives every tab its own dip, so it uses the three tabs it was designed with.
+private val WavePreviewItems = HaloPreviewItems
+    .filter { it.label in setOf("Home", "Cart", "Profile") }
+    .map { WaveBarItem(it.label, it.icon, it.selectedIcon) }

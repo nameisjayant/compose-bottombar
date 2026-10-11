@@ -21,6 +21,7 @@ import com.nameisjayant.composebottombar.home.BottomBarType
 import com.nameisjayant.composebottombar.home.HomeScreen
 import com.nameisjayant.composebottombar.socket.SocketBottomBarDemo
 import com.nameisjayant.composebottombar.valley.ValleyBottomBarDemo
+import com.nameisjayant.composebottombar.wave.WaveBottomBarDemo
 import kotlinx.serialization.Serializable
 
 /** Top-level routes: the catalog, and one full-screen demo per bottom bar. */
@@ -32,6 +33,7 @@ import kotlinx.serialization.Serializable
 @Serializable data object SocketDemoRoute : NavKey
 @Serializable data object GableDemoRoute : NavKey
 @Serializable data object DiamondDemoRoute : NavKey
+@Serializable data object WaveDemoRoute : NavKey
 
 private fun BottomBarType.route(): NavKey = when (this) {
     BottomBarType.Halo -> HaloDemoRoute
@@ -41,6 +43,7 @@ private fun BottomBarType.route(): NavKey = when (this) {
     BottomBarType.Socket -> SocketDemoRoute
     BottomBarType.Gable -> GableDemoRoute
     BottomBarType.Diamond -> DiamondDemoRoute
+    BottomBarType.Wave -> WaveDemoRoute
 }
 
 @Composable
@@ -88,6 +91,9 @@ fun AppNavigation(darkTheme: Boolean, onDarkThemeChange: (Boolean) -> Unit) {
             }
             entry<DiamondDemoRoute> {
                 DiamondBottomBarDemo(darkTheme = darkTheme, onDarkThemeChange = onDarkThemeChange)
+            }
+            entry<WaveDemoRoute> {
+                WaveBottomBarDemo(darkTheme = darkTheme, onDarkThemeChange = onDarkThemeChange)
             }
         },
     )

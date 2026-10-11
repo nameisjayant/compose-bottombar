@@ -39,6 +39,9 @@ import com.nameisjayant.bottombar.socket.SocketBottomBarDefaults
 import com.nameisjayant.bottombar.valley.ValleyBarItem
 import com.nameisjayant.bottombar.valley.ValleyBottomBar
 import com.nameisjayant.bottombar.valley.ValleyBottomBarDefaults
+import com.nameisjayant.bottombar.wave.WaveBarItem
+import com.nameisjayant.bottombar.wave.WaveBottomBar
+import com.nameisjayant.bottombar.wave.WaveBottomBarDefaults
 import com.nameisjayant.composebottombar.halo.ShopIcons
 import java.io.File
 import org.junit.Assume.assumeTrue
@@ -87,6 +90,11 @@ class RecordBottomBarGifs {
     private val gableItems = haloItems.map { GableBarItem(it.label, it.icon, it.selectedIcon) }
 
     private val diamondItems = haloItems.map { DiamondBarItem(it.label, it.icon, it.selectedIcon) }
+
+    // Wave gives every tab its own dip, so it uses the three tabs it was designed with.
+    private val waveItems = haloItems
+        .filter { it.label in setOf("Home", "Cart", "Profile") }
+        .map { WaveBarItem(it.label, it.icon, it.selectedIcon) }
 
     @Test
     fun haloLight() = recordHalo(darkTheme = false)
@@ -222,6 +230,28 @@ class RecordBottomBarGifs {
                 selectedIndex = selectedIndex,
                 onItemClick = onItemClick,
                 colors = DiamondBottomBarDefaults.colors(darkTheme),
+                windowInsets = WindowInsets(0.dp),
+            )
+        }
+    }
+
+    @Test
+    fun waveLight() = recordWave(darkTheme = false)
+
+    @Test
+    fun waveDark() = recordWave(darkTheme = true)
+
+    private fun recordWave(darkTheme: Boolean) {
+        record(
+            name = if (darkTheme) "wave-dark" else "wave-light",
+            darkTheme = darkTheme,
+            tour = listOf(0, 1, 2, 1, 0),
+        ) { selectedIndex, onItemClick ->
+            WaveBottomBar(
+                items = waveItems,
+                selectedIndex = selectedIndex,
+                onItemClick = onItemClick,
+                colors = WaveBottomBarDefaults.colors(darkTheme),
                 windowInsets = WindowInsets(0.dp),
             )
         }

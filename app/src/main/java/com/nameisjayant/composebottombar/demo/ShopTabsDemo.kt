@@ -66,23 +66,25 @@ val ShopTabs = listOf(
     ShopTab(CartRoute, "Cart", ShopIcons.Cart, ShopIcons.CartFilled),
     ShopTab(ProfileRoute, "Profile", ShopIcons.Profile, ShopIcons.ProfileFilled),
 )
-private val TabRoutes = ShopTabs.map { it.route }
 
 /**
  * A small shop app with one back stack per tab, used by every bar's demo. [bottomBar] draws the bar
- * for the given selected tab index and reports taps through `onItemClick`.
+ * for the given selected index into [tabs] and reports taps through `onItemClick`. [tabs] defaults to
+ * all five shop tabs and must start with Home.
  */
 @Composable
 fun ShopTabsDemo(
     darkTheme: Boolean,
     onDarkThemeChange: (Boolean) -> Unit,
+    tabs: List<ShopTab> = ShopTabs,
     bottomBar: @Composable (selectedIndex: Int, onItemClick: (Int) -> Unit) -> Unit,
 ) {
-    val navigationState = rememberNavigationState(startRoute = HomeRoute, topLevelRoutes = TabRoutes)
+    val tabRoutes = remember(tabs) { tabs.map { it.route } }
+    val navigationState = rememberNavigationState(startRoute = HomeRoute, topLevelRoutes = tabRoutes)
     val navigator = remember(navigationState) { Navigator(navigationState) }
 
     val entryProvider = entryProvider {
-        ShopTabs.forEach { tab ->
+        tabs.forEach { tab ->
             entry(tab.route) {
                 DemoScreen(
                     title = tab.label,
@@ -109,7 +111,7 @@ fun ShopTabsDemo(
         containerColor = MaterialTheme.colorScheme.background,
         contentWindowInsets = WindowInsets(0.dp),
         bottomBar = {
-            bottomBar(TabRoutes.indexOf(navigationState.topLevelRoute)) { index -> navigator.navigate(TabRoutes[index]) }
+            bottomBar(tabRoutes.indexOf(navigationState.topLevelRoute)) { index -> navigator.navigate(tabRoutes[index]) }
         },
     ) { innerPadding ->
         NavDisplay(
