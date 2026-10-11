@@ -216,11 +216,25 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
   </tr>
 </table>
 
+<table>
+  <tr>
+    <th colspan="2">Orbit BottomBar</th>
+  </tr>
+  <tr>
+    <td align="center" width="50%">☀️ Light</td>
+    <td align="center" width="50%">🌙 Dark</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/gifs/orbit-light.gif" width="400" alt="Orbit bottom bar in light theme, switching between tabs" /></td>
+    <td valign="top"><img src="docs/gifs/orbit-dark.gif" width="400" alt="Orbit bottom bar in dark theme, switching between tabs" /></td>
+  </tr>
+</table>
+
 ## Features
 
 - 🎯 **Ready to use**: pass a list of items and the selected index, and you get a finished bar.
 - 🌗 **Light and dark built in**: every bar ships both palettes and follows the system theme by default.
-- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press, the Socket's gliding bubble, the Gable's bubble sliding along its roof line, the Diamond's quarter-turn spin, the Wave's rings filling into solid orbs, the Rail's rails growing around the selected tab, the Crest's orb popping up as its wings dip, the Scribble's loop drawing itself around the selected icon, the Bead hopping from notch to notch, the Peak's strip stretching from tab to tab or the Teardrop popping out of its pointed tip.
+- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press, the Socket's gliding bubble, the Gable's bubble sliding along its roof line, the Diamond's quarter-turn spin, the Wave's rings filling into solid orbs, the Rail's rails growing around the selected tab, the Crest's orb popping up as its wings dip, the Scribble's loop drawing itself around the selected icon, the Bead hopping from notch to notch, the Peak's strip stretching from tab to tab, the Teardrop popping out of its pointed tip or the ring rippling out of the Orbit's orb.
 - 🎨 **Customizable**: change any color through `XxxBottomBarDefaults.lightColors(...)` / `darkColors(...)`, plus label style and window insets.
 - ♿ **Accessible**: items are exposed as selectable tabs in a selectable group, so TalkBack reads them correctly.
 - 🪶 **Light dependencies**: only Compose UI, Foundation and Animation. No Material, icons or navigation library is forced on your app.
@@ -244,6 +258,7 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
 | **Bead** | `BeadBottomBar` | A flat bar with a small round notch cut into its top edge over the selected tab, holding an accent bead. Icons and labels always show; the notch glides to the new tab while the bead hops along with it, and the tab fills in and turns the accent color |
 | **Peak** | `PeakBottomBar` | A floating pill of icon-only tabs. The selected icon lifts and fills in over its label, and an accent strip with a small peak in its middle sits on the bottom edge under it, stretching as it slides from tab to tab |
 | **Teardrop** | `TeardropBottomBar` | A flat bar of icon-only tabs. The selected icon fills in inside an accent teardrop, a circle with one pointed corner like a chat bubble, which pops out of its tip with a springy twist |
+| **Orbit** | `OrbitBottomBar` | A floating, rounded bar whose top edge rises into a thin rim arching over the glowing center orb, with a see-through crescent between them. Icon-only tabs; the selected icon lifts and fills in over its label, and a ring ripples out of the orb when it is selected |
 
 More bars are on the way.
 
@@ -799,6 +814,41 @@ Colors come from `TeardropBottomBarDefaults.colors(darkTheme)`, `lightColors(...
 | `indicatorColor` | The teardrop behind the selected icon |
 | `selectedContentColor` | The icon inside the teardrop (white by default) |
 | `unselectedContentColor` | Icons of the other tabs |
+
+### Orbit bottom bar
+
+`OrbitBarItem` works like `DomeBarItem`: the **middle item becomes the orb** inside the rim, so pass an odd number of items. Side tabs show only their icon, centered in the bar; the selected one lifts, switches to its `selectedIcon` and shows its label underneath.
+
+```kotlin
+val items = listOf(
+    OrbitBarItem("Home", Icons.Outlined.Home, Icons.Filled.Home),
+    OrbitBarItem("Search", Icons.Outlined.Search, Icons.Filled.Search),
+    OrbitBarItem("Store", Icons.Outlined.Storefront, Icons.Filled.Storefront), // the orb
+    OrbitBarItem("Cart", Icons.Outlined.ShoppingCart, Icons.Filled.ShoppingCart),
+    OrbitBarItem("Profile", Icons.Outlined.Person, Icons.Filled.Person),
+)
+
+OrbitBottomBar(
+    items = items,
+    selectedIndex = selectedIndex,
+    onItemClick = { selectedIndex = it },
+    // The bottom corners are rounded, so it looks best floating a little above the screen edge.
+    modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 12.dp),
+    shadowElevation = 8.dp,
+)
+```
+
+The bar is `BarHeight` (66dp) tall plus `DomeRise` (28dp) for the rim, all inside its own bounds. The orb is `OrbSize` (48dp). Above it sits a `RimWidth` (1.5dp) rim, a circle as wide as the orb lifted `MoatLift` (7dp) higher, so the gap between them is a crescent: widest over the orb and narrowing to nothing at its sides. The crescent is cut out of the bar, so whatever is behind the bar shows through it. `shadowElevation` defaults to `0.dp`; the outline is concave, which Android can only cast a shadow for on API 30+.
+
+Colors come from `OrbitBottomBarDefaults.colors(darkTheme)`, `lightColors(...)` and `darkColors(...)`:
+
+| Color | Used for |
+|---|---|
+| `containerColor` | The bar and its rim |
+| `selectedContentColor` | Icon and label of the selected side tab |
+| `unselectedContentColor` | Icons of the other side tabs |
+| `orbColor` | Fill of the center orb, and the ring that ripples out when it is selected |
+| `orbContentColor` | Icon inside the orb |
 
 ### With Navigation 3
 

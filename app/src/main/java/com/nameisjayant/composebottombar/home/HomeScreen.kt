@@ -54,6 +54,9 @@ import com.nameisjayant.bottombar.gable.GableBottomBarDefaults
 import com.nameisjayant.bottombar.halo.HaloBarItem
 import com.nameisjayant.bottombar.halo.HaloBottomBar
 import com.nameisjayant.bottombar.halo.HaloBottomBarDefaults
+import com.nameisjayant.bottombar.orbit.OrbitBarItem
+import com.nameisjayant.bottombar.orbit.OrbitBottomBar
+import com.nameisjayant.bottombar.orbit.OrbitBottomBarDefaults
 import com.nameisjayant.bottombar.peak.PeakBarItem
 import com.nameisjayant.bottombar.peak.PeakBottomBar
 import com.nameisjayant.bottombar.peak.PeakBottomBarDefaults
@@ -269,6 +272,14 @@ private fun BottomBarPreview(type: BottomBarType, darkTheme: Boolean, onClick: (
             colors = TeardropBottomBarDefaults.colors(darkTheme),
             windowInsets = WindowInsets(0.dp),
         )
+        BottomBarType.Orbit -> OrbitBottomBar(
+            items = OrbitPreviewItems,
+            selectedIndex = 0,
+            onItemClick = { onClick() },
+            modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
+            colors = OrbitBottomBarDefaults.colors(darkTheme),
+            windowInsets = WindowInsets(0.dp),
+        )
     }
 }
 
@@ -323,3 +334,5 @@ private val PeakPreviewItems = HaloPreviewItems
 private val TeardropPreviewItems = HaloPreviewItems
     .filter { it.label != "Store" }
     .map { TeardropBarItem(it.label, it.icon, it.selectedIcon) }
+
+private val OrbitPreviewItems = HaloPreviewItems.map { OrbitBarItem(it.label, it.icon, it.selectedIcon) }

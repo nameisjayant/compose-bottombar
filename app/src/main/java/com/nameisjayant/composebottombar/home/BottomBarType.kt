@@ -58,4 +58,8 @@ enum class BottomBarType(val title: String, val description: String) {
         title = "TeardropBottomBar",
         description = "Flat bar of icons where the selected one fills in inside a teardrop that pops out of its pointed tip.",
     ),
+    Orbit(
+        title = "OrbitBottomBar",
+        description = "Rounded bar whose dome thins into a rim orbiting the center orb; the selected icon lifts over its label.",
+    ),
 }

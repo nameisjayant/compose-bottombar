@@ -39,6 +39,9 @@ import com.nameisjayant.bottombar.gable.GableBottomBarDefaults
 import com.nameisjayant.bottombar.halo.HaloBarItem
 import com.nameisjayant.bottombar.halo.HaloBottomBar
 import com.nameisjayant.bottombar.halo.HaloBottomBarDefaults
+import com.nameisjayant.bottombar.orbit.OrbitBarItem
+import com.nameisjayant.bottombar.orbit.OrbitBottomBar
+import com.nameisjayant.bottombar.orbit.OrbitBottomBarDefaults
 import com.nameisjayant.bottombar.peak.PeakBarItem
 import com.nameisjayant.bottombar.peak.PeakBottomBar
 import com.nameisjayant.bottombar.peak.PeakBottomBarDefaults
@@ -95,6 +98,8 @@ class RecordBottomBarGifs {
     )
 
     private val domeItems = haloItems.map { DomeBarItem(it.label, it.icon, it.selectedIcon) }
+
+    private val orbitItems = haloItems.map { OrbitBarItem(it.label, it.icon, it.selectedIcon) }
 
     private val cradleItems = haloItems.map { CradleBarItem(it.label, it.icon, it.selectedIcon) }
 
@@ -425,6 +430,26 @@ class RecordBottomBarGifs {
                 selectedIndex = selectedIndex,
                 onItemClick = onItemClick,
                 colors = TeardropBottomBarDefaults.colors(darkTheme),
+                windowInsets = WindowInsets(0.dp),
+            )
+        }
+    }
+
+    @Test
+    fun orbitLight() = recordOrbit(darkTheme = false)
+
+    @Test
+    fun orbitDark() = recordOrbit(darkTheme = true)
+
+    private fun recordOrbit(darkTheme: Boolean) {
+        record(name = if (darkTheme) "orbit-dark" else "orbit-light", darkTheme = darkTheme) { selectedIndex, onItemClick ->
+            OrbitBottomBar(
+                items = orbitItems,
+                selectedIndex = selectedIndex,
+                onItemClick = onItemClick,
+                modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 12.dp),
+                colors = OrbitBottomBarDefaults.colors(darkTheme),
+                shadowElevation = if (darkTheme) 0.dp else 8.dp,
                 windowInsets = WindowInsets(0.dp),
             )
         }
