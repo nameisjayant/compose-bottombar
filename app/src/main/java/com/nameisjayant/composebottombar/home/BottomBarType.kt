@@ -14,4 +14,8 @@ enum class BottomBarType(val title: String, val description: String) {
         title = "CradleBottomBar",
         description = "Flat bar whose top edge dips into a notch that cradles a raised orb. Icons fill in on selection.",
     ),
+    Valley(
+        title = "ValleyBottomBar",
+        description = "Bar whose whole top edge sags in one curve under a glowing orb, which presses into the valley when selected.",
+    ),
 }

@@ -42,6 +42,9 @@ import com.nameisjayant.bottombar.dome.DomeBottomBarDefaults
 import com.nameisjayant.bottombar.halo.HaloBarItem
 import com.nameisjayant.bottombar.halo.HaloBottomBar
 import com.nameisjayant.bottombar.halo.HaloBottomBarDefaults
+import com.nameisjayant.bottombar.valley.ValleyBarItem
+import com.nameisjayant.bottombar.valley.ValleyBottomBar
+import com.nameisjayant.bottombar.valley.ValleyBottomBarDefaults
 import com.nameisjayant.composebottombar.halo.ShopIcons
 
 /** Catalog of every bottom bar. Tapping a card opens that bar's full demo. */
@@ -157,6 +160,13 @@ private fun BottomBarPreview(type: BottomBarType, darkTheme: Boolean, onClick: (
             colors = CradleBottomBarDefaults.colors(darkTheme),
             windowInsets = WindowInsets(0.dp),
         )
+        BottomBarType.Valley -> ValleyBottomBar(
+            items = ValleyPreviewItems,
+            selectedIndex = 0,
+            onItemClick = { onClick() },
+            colors = ValleyBottomBarDefaults.colors(darkTheme),
+            windowInsets = WindowInsets(0.dp),
+        )
     }
 }
 
@@ -171,3 +181,5 @@ private val HaloPreviewItems = listOf(
 private val DomePreviewItems = HaloPreviewItems.map { DomeBarItem(it.label, it.icon, it.selectedIcon) }
 
 private val CradlePreviewItems = HaloPreviewItems.map { CradleBarItem(it.label, it.icon, it.selectedIcon) }
+
+private val ValleyPreviewItems = HaloPreviewItems.map { ValleyBarItem(it.label, it.icon, it.selectedIcon) }

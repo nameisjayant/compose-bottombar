@@ -27,6 +27,9 @@ import com.nameisjayant.bottombar.dome.DomeBottomBarDefaults
 import com.nameisjayant.bottombar.halo.HaloBarItem
 import com.nameisjayant.bottombar.halo.HaloBottomBar
 import com.nameisjayant.bottombar.halo.HaloBottomBarDefaults
+import com.nameisjayant.bottombar.valley.ValleyBarItem
+import com.nameisjayant.bottombar.valley.ValleyBottomBar
+import com.nameisjayant.bottombar.valley.ValleyBottomBarDefaults
 import com.nameisjayant.composebottombar.halo.ShopIcons
 import java.io.File
 import org.junit.Assume.assumeTrue
@@ -64,6 +67,8 @@ class RecordBottomBarGifs {
     private val domeItems = haloItems.map { DomeBarItem(it.label, it.icon, it.selectedIcon) }
 
     private val cradleItems = haloItems.map { CradleBarItem(it.label, it.icon, it.selectedIcon) }
+
+    private val valleyItems = haloItems.map { ValleyBarItem(it.label, it.icon, it.selectedIcon) }
 
     @Test
     fun haloLight() = recordHalo(darkTheme = false)
@@ -117,6 +122,24 @@ class RecordBottomBarGifs {
                 onItemClick = onItemClick,
                 colors = CradleBottomBarDefaults.colors(darkTheme),
                 shadowElevation = if (darkTheme) 0.dp else 8.dp,
+                windowInsets = WindowInsets(0.dp),
+            )
+        }
+    }
+
+    @Test
+    fun valleyLight() = recordValley(darkTheme = false)
+
+    @Test
+    fun valleyDark() = recordValley(darkTheme = true)
+
+    private fun recordValley(darkTheme: Boolean) {
+        record(name = if (darkTheme) "valley-dark" else "valley-light", darkTheme = darkTheme) { selectedIndex, onItemClick ->
+            ValleyBottomBar(
+                items = valleyItems,
+                selectedIndex = selectedIndex,
+                onItemClick = onItemClick,
+                colors = ValleyBottomBarDefaults.colors(darkTheme),
                 windowInsets = WindowInsets(0.dp),
             )
         }

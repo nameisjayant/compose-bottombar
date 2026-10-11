@@ -62,11 +62,25 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
   </tr>
 </table>
 
+<table>
+  <tr>
+    <th colspan="2">Valley BottomBar</th>
+  </tr>
+  <tr>
+    <td align="center" width="50%">☀️ Light</td>
+    <td align="center" width="50%">🌙 Dark</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/gifs/valley-light.gif" width="400" alt="Valley bottom bar in light theme, switching between tabs" /></td>
+    <td valign="top"><img src="docs/gifs/valley-dark.gif" width="400" alt="Valley bottom bar in dark theme, switching between tabs" /></td>
+  </tr>
+</table>
+
 ## Features
 
 - 🎯 **Ready to use**: pass a list of items and the selected index, and you get a finished bar.
 - 🌗 **Light and dark built in**: every bar ships both palettes and follows the system theme by default.
-- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels or the Cradle's orb ripple.
+- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple or the Valley's orb press.
 - 🎨 **Customizable**: change any color through `XxxBottomBarDefaults.lightColors(...)` / `darkColors(...)`, plus label style and window insets.
 - ♿ **Accessible**: items are exposed as selectable tabs in a selectable group, so TalkBack reads them correctly.
 - 🪶 **Light dependencies**: only Compose UI, Foundation and Animation. No Material, icons or navigation library is forced on your app.
@@ -79,6 +93,7 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
 | **Halo** | `HaloBottomBar` | A flat bar with a raised, ringed center orb. Outlined/filled icon swap, spring bounce on selection, and a ring that ripples out of the orb when it is selected |
 | **Dome** | `DomeBottomBar` | A floating, rounded bar whose top edge swells into a dome around a glowing orb. Icon-only tabs; the selected one fills in and its label slides up underneath |
 | **Cradle** | `CradleBottomBar` | A flat bar whose top edge dips into a smooth notch that cradles a raised orb. Icons and labels always show; the selected tab fills in and turns the accent color, and a ring ripples out of the orb when it is selected |
+| **Valley** | `ValleyBottomBar` | A bar whose whole top edge sags in one smooth curve, with a glowing orb resting in the low point. Icons and labels always show; when the orb is selected it presses into the valley, which sinks with it and springs back |
 
 More bars are on the way.
 
@@ -279,6 +294,39 @@ Colors come from `CradleBottomBarDefaults.colors(darkTheme)`, `lightColors(...)`
 | `unselectedContentColor` | Icons of the other side tabs |
 | `unselectedLabelColor` | Labels of the other side tabs |
 | `orbColor` | Fill of the center orb, and the ring that ripples out when it is selected |
+| `orbContentColor` | Icon inside the orb |
+
+### Valley bottom bar
+
+`ValleyBarItem` follows the same rules: the **middle item becomes the orb** resting in the valley, so pass an odd number of items. Every side tab shows its icon and label; the selected one switches to its `selectedIcon` and takes `selectedContentColor`.
+
+```kotlin
+val items = listOf(
+    ValleyBarItem("Home", Icons.Outlined.Home, Icons.Filled.Home),
+    ValleyBarItem("Search", Icons.Outlined.Search, Icons.Filled.Search),
+    ValleyBarItem("Store", Icons.Outlined.Storefront, Icons.Filled.Storefront), // the orb
+    ValleyBarItem("Cart", Icons.Outlined.ShoppingCart, Icons.Filled.ShoppingCart),
+    ValleyBarItem("Profile", Icons.Outlined.Person, Icons.Filled.Person),
+)
+
+ValleyBottomBar(
+    items = items,
+    selectedIndex = selectedIndex,
+    onItemClick = { selectedIndex = it },
+)
+```
+
+The bar is `BarHeight` (94dp) tall at its outer corners, and its top edge sags `ValleyDepth` (22dp) at the center. The 60dp orb (`OrbSize`) rises `OrbOverhang` (12dp) above the corners, inside the bar's own bounds, and casts a glow in its own color (`OrbElevation`). `ContentPadding` sets the space between the sides and the outer tabs. As with Dome and Cradle, `shadowElevation` defaults to `0.dp` and needs API 30+ because of the concave outline.
+
+Colors come from `ValleyBottomBarDefaults.colors(darkTheme)`, `lightColors(...)` and `darkColors(...)`:
+
+| Color | Used for |
+|---|---|
+| `containerColor` | The bar background |
+| `selectedContentColor` | Icon and label of the selected side tab |
+| `unselectedContentColor` | Icons of the other side tabs |
+| `unselectedLabelColor` | Labels of the other side tabs |
+| `orbColor` | Fill of the center orb and its glow |
 | `orbContentColor` | Icon inside the orb |
 
 ### With Navigation 3
