@@ -33,6 +33,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.dropUnlessResumed
+import com.nameisjayant.bottombar.bead.BeadBarItem
+import com.nameisjayant.bottombar.bead.BeadBottomBar
+import com.nameisjayant.bottombar.bead.BeadBottomBarDefaults
 import com.nameisjayant.bottombar.cradle.CradleBarItem
 import com.nameisjayant.bottombar.cradle.CradleBottomBar
 import com.nameisjayant.bottombar.cradle.CradleBottomBarDefaults
@@ -238,6 +241,13 @@ private fun BottomBarPreview(type: BottomBarType, darkTheme: Boolean, onClick: (
             colors = ScribbleBottomBarDefaults.colors(darkTheme),
             windowInsets = WindowInsets(0.dp),
         )
+        BottomBarType.Bead -> BeadBottomBar(
+            items = BeadPreviewItems,
+            selectedIndex = 0,
+            onItemClick = { onClick() },
+            colors = BeadBottomBarDefaults.colors(darkTheme),
+            windowInsets = WindowInsets(0.dp),
+        )
     }
 }
 
@@ -280,3 +290,5 @@ private val CrestPreviewItems = HaloPreviewItems.map { CrestBarItem(it.label, it
 private val ScribblePreviewItems = HaloPreviewItems
     .filter { it.label != "Store" }
     .map { ScribbleBarItem(it.label, it.icon) }
+
+private val BeadPreviewItems = HaloPreviewItems.map { BeadBarItem(it.label, it.icon, it.selectedIcon) }

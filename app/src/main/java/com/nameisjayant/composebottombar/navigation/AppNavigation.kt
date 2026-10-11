@@ -12,6 +12,7 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import com.nameisjayant.composebottombar.bead.BeadBottomBarDemo
 import com.nameisjayant.composebottombar.cradle.CradleBottomBarDemo
 import com.nameisjayant.composebottombar.crest.CrestBottomBarDemo
 import com.nameisjayant.composebottombar.diamond.DiamondBottomBarDemo
@@ -40,6 +41,7 @@ import kotlinx.serialization.Serializable
 @Serializable data object RailDemoRoute : NavKey
 @Serializable data object CrestDemoRoute : NavKey
 @Serializable data object ScribbleDemoRoute : NavKey
+@Serializable data object BeadDemoRoute : NavKey
 
 private fun BottomBarType.route(): NavKey = when (this) {
     BottomBarType.Halo -> HaloDemoRoute
@@ -53,6 +55,7 @@ private fun BottomBarType.route(): NavKey = when (this) {
     BottomBarType.Rail -> RailDemoRoute
     BottomBarType.Crest -> CrestDemoRoute
     BottomBarType.Scribble -> ScribbleDemoRoute
+    BottomBarType.Bead -> BeadDemoRoute
 }
 
 @Composable
@@ -112,6 +115,9 @@ fun AppNavigation(darkTheme: Boolean, onDarkThemeChange: (Boolean) -> Unit) {
             }
             entry<ScribbleDemoRoute> {
                 ScribbleBottomBarDemo(darkTheme = darkTheme, onDarkThemeChange = onDarkThemeChange)
+            }
+            entry<BeadDemoRoute> {
+                BeadBottomBarDemo(darkTheme = darkTheme, onDarkThemeChange = onDarkThemeChange)
             }
         },
     )

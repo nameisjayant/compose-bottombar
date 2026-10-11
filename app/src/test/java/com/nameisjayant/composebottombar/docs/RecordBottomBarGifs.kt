@@ -18,6 +18,9 @@ import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.unit.dp
+import com.nameisjayant.bottombar.bead.BeadBarItem
+import com.nameisjayant.bottombar.bead.BeadBottomBar
+import com.nameisjayant.bottombar.bead.BeadBottomBarDefaults
 import com.nameisjayant.bottombar.cradle.CradleBarItem
 import com.nameisjayant.bottombar.cradle.CradleBottomBar
 import com.nameisjayant.bottombar.cradle.CradleBottomBarDefaults
@@ -116,6 +119,8 @@ class RecordBottomBarGifs {
     private val scribbleItems = haloItems
         .filter { it.label != "Store" }
         .map { ScribbleBarItem(it.label, it.icon) }
+
+    private val beadItems = haloItems.map { BeadBarItem(it.label, it.icon, it.selectedIcon) }
 
     @Test
     fun haloLight() = recordHalo(darkTheme = false)
@@ -341,6 +346,24 @@ class RecordBottomBarGifs {
                 selectedIndex = selectedIndex,
                 onItemClick = onItemClick,
                 colors = ScribbleBottomBarDefaults.colors(darkTheme),
+                windowInsets = WindowInsets(0.dp),
+            )
+        }
+    }
+
+    @Test
+    fun beadLight() = recordBead(darkTheme = false)
+
+    @Test
+    fun beadDark() = recordBead(darkTheme = true)
+
+    private fun recordBead(darkTheme: Boolean) {
+        record(name = if (darkTheme) "bead-dark" else "bead-light", darkTheme = darkTheme) { selectedIndex, onItemClick ->
+            BeadBottomBar(
+                items = beadItems,
+                selectedIndex = selectedIndex,
+                onItemClick = onItemClick,
+                colors = BeadBottomBarDefaults.colors(darkTheme),
                 windowInsets = WindowInsets(0.dp),
             )
         }

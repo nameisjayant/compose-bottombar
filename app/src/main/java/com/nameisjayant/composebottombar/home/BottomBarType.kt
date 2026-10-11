@@ -46,4 +46,8 @@ enum class BottomBarType(val title: String, val description: String) {
         title = "ScribbleBottomBar",
         description = "Flat bar of icon-only tabs; a hand-drawn loop draws itself around the selected icon, with a dot underneath.",
     ),
+    Bead(
+        title = "BeadBottomBar",
+        description = "Flat bar with a small notch over the selected tab, holding a bead that hops from tab to tab.",
+    ),
 }

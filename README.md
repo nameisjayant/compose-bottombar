@@ -174,11 +174,25 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
   </tr>
 </table>
 
+<table>
+  <tr>
+    <th colspan="2">Bead BottomBar</th>
+  </tr>
+  <tr>
+    <td align="center" width="50%">☀️ Light</td>
+    <td align="center" width="50%">🌙 Dark</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/gifs/bead-light.gif" width="400" alt="Bead bottom bar in light theme, switching between tabs" /></td>
+    <td valign="top"><img src="docs/gifs/bead-dark.gif" width="400" alt="Bead bottom bar in dark theme, switching between tabs" /></td>
+  </tr>
+</table>
+
 ## Features
 
 - 🎯 **Ready to use**: pass a list of items and the selected index, and you get a finished bar.
 - 🌗 **Light and dark built in**: every bar ships both palettes and follows the system theme by default.
-- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press, the Socket's gliding bubble, the Gable's bubble sliding along its roof line, the Diamond's quarter-turn spin, the Wave's rings filling into solid orbs, the Rail's rails growing around the selected tab, the Crest's orb popping up as its wings dip or the Scribble's loop drawing itself around the selected icon.
+- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press, the Socket's gliding bubble, the Gable's bubble sliding along its roof line, the Diamond's quarter-turn spin, the Wave's rings filling into solid orbs, the Rail's rails growing around the selected tab, the Crest's orb popping up as its wings dip, the Scribble's loop drawing itself around the selected icon or the Bead hopping from notch to notch.
 - 🎨 **Customizable**: change any color through `XxxBottomBarDefaults.lightColors(...)` / `darkColors(...)`, plus label style and window insets.
 - ♿ **Accessible**: items are exposed as selectable tabs in a selectable group, so TalkBack reads them correctly.
 - 🪶 **Light dependencies**: only Compose UI, Foundation and Animation. No Material, icons or navigation library is forced on your app.
@@ -199,6 +213,7 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
 | **Rail** | `RailBottomBar` | A flat bar of icon-only tabs. The selected tab widens to show its label beside a filled icon, and two thin accent rails grow out from its center, one above and one below |
 | **Crest** | `CrestBottomBar` | A floating bar split into two wings whose top edges climb towards the center, where a glowing orb rests in a round socket between them. Icons and labels always show; when the orb is selected it pops up out of the socket while the wings dip under it |
 | **Scribble** | `ScribbleBottomBar` | A flat bar of icon-only tabs. The selected icon darkens and a hand-drawn accent loop draws itself around it, overshooting its start like a quick pen stroke, before a small dot pops in underneath |
+| **Bead** | `BeadBottomBar` | A flat bar with a small round notch cut into its top edge over the selected tab, holding an accent bead. Icons and labels always show; the notch glides to the new tab while the bead hops along with it, and the tab fills in and turns the accent color |
 
 More bars are on the way.
 
@@ -660,6 +675,38 @@ Colors come from `ScribbleBottomBarDefaults.colors(darkTheme)`, `lightColors(...
 | `selectedContentColor` | Icon of the selected tab |
 | `unselectedContentColor` | Icons of the other tabs |
 | `scribbleColor` | The loop and the dot under the selected tab |
+
+### Bead bottom bar
+
+`BeadBarItem` has no center item: any tab can be selected, and every slot gets the same width. Every tab shows its icon and label; the selected one switches to its `selectedIcon` and takes `selectedContentColor`.
+
+```kotlin
+val items = listOf(
+    BeadBarItem("Home", Icons.Outlined.Home, Icons.Filled.Home),
+    BeadBarItem("Search", Icons.Outlined.Search, Icons.Filled.Search),
+    BeadBarItem("Shop", Icons.Outlined.Storefront, Icons.Filled.Storefront),
+    BeadBarItem("Cart", Icons.Outlined.ShoppingCart, Icons.Filled.ShoppingCart),
+    BeadBarItem("Profile", Icons.Outlined.Person, Icons.Filled.Person),
+)
+
+BeadBottomBar(
+    items = items,
+    selectedIndex = selectedIndex,
+    onItemClick = { selectedIndex = it },
+)
+```
+
+The bar is `BarHeight` (66dp) tall. The `BeadSize` (12dp) bead sits centered on the top edge in a notch of `NotchRadius` (15dp), rounded off by `NotchShoulderRadius` (7dp) shoulders. When the selection changes the bead hops up to `HopHeight` (10dp) on its way to the new tab, so leave a little room above the bar. As with Socket, `shadowElevation` defaults to `0.dp` and needs API 30+ because of the concave outline.
+
+Colors come from `BeadBottomBarDefaults.colors(darkTheme)`, `lightColors(...)` and `darkColors(...)`:
+
+| Color | Used for |
+|---|---|
+| `containerColor` | The bar background |
+| `beadColor` | The bead in the notch |
+| `selectedContentColor` | Icon and label of the selected tab (defaults to `beadColor`) |
+| `unselectedContentColor` | Icons of the other tabs |
+| `unselectedLabelColor` | Labels of the other tabs |
 
 ### With Navigation 3
 
