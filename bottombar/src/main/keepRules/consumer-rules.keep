@@ -1,0 +1,2 @@
+# Keep rules shipped to apps that depend on the bottombar library.
+# The library has no reflection today, so nothing needs keeping yet.
