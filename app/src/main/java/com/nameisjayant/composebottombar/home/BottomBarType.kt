@@ -62,4 +62,8 @@ enum class BottomBarType(val title: String, val description: String) {
         title = "OrbitBottomBar",
         description = "Rounded bar whose dome thins into a rim orbiting the center orb; the selected icon lifts over its label.",
     ),
+    Tile(
+        title = "TileBottomBar",
+        description = "Flat, square bar where an accent tile fills the selected tab and stretches as it slides to the next.",
+    ),
 }

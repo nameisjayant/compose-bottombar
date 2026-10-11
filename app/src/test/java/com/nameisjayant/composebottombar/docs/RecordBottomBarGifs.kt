@@ -63,6 +63,9 @@ import com.nameisjayant.bottombar.wave.WaveBottomBarDefaults
 import com.nameisjayant.bottombar.teardrop.TeardropBarItem
 import com.nameisjayant.bottombar.teardrop.TeardropBottomBar
 import com.nameisjayant.bottombar.teardrop.TeardropBottomBarDefaults
+import com.nameisjayant.bottombar.tile.TileBarItem
+import com.nameisjayant.bottombar.tile.TileBottomBar
+import com.nameisjayant.bottombar.tile.TileBottomBarDefaults
 import com.nameisjayant.composebottombar.halo.ShopIcons
 import java.io.File
 import org.junit.Assume.assumeTrue
@@ -100,6 +103,8 @@ class RecordBottomBarGifs {
     private val domeItems = haloItems.map { DomeBarItem(it.label, it.icon, it.selectedIcon) }
 
     private val orbitItems = haloItems.map { OrbitBarItem(it.label, it.icon, it.selectedIcon) }
+
+    private val tileItems = haloItems.map { TileBarItem(it.label, it.icon, it.selectedIcon) }
 
     private val cradleItems = haloItems.map { CradleBarItem(it.label, it.icon, it.selectedIcon) }
 
@@ -449,6 +454,25 @@ class RecordBottomBarGifs {
                 onItemClick = onItemClick,
                 modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 12.dp),
                 colors = OrbitBottomBarDefaults.colors(darkTheme),
+                shadowElevation = if (darkTheme) 0.dp else 8.dp,
+                windowInsets = WindowInsets(0.dp),
+            )
+        }
+    }
+
+    @Test
+    fun tileLight() = recordTile(darkTheme = false)
+
+    @Test
+    fun tileDark() = recordTile(darkTheme = true)
+
+    private fun recordTile(darkTheme: Boolean) {
+        record(name = if (darkTheme) "tile-dark" else "tile-light", darkTheme = darkTheme) { selectedIndex, onItemClick ->
+            TileBottomBar(
+                items = tileItems,
+                selectedIndex = selectedIndex,
+                onItemClick = onItemClick,
+                colors = TileBottomBarDefaults.colors(darkTheme),
                 shadowElevation = if (darkTheme) 0.dp else 8.dp,
                 windowInsets = WindowInsets(0.dp),
             )

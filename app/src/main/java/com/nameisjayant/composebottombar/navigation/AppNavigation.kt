@@ -27,6 +27,7 @@ import com.nameisjayant.composebottombar.rail.RailBottomBarDemo
 import com.nameisjayant.composebottombar.scribble.ScribbleBottomBarDemo
 import com.nameisjayant.composebottombar.socket.SocketBottomBarDemo
 import com.nameisjayant.composebottombar.teardrop.TeardropBottomBarDemo
+import com.nameisjayant.composebottombar.tile.TileBottomBarDemo
 import com.nameisjayant.composebottombar.valley.ValleyBottomBarDemo
 import com.nameisjayant.composebottombar.wave.WaveBottomBarDemo
 import kotlinx.serialization.Serializable
@@ -48,6 +49,7 @@ import kotlinx.serialization.Serializable
 @Serializable data object PeakDemoRoute : NavKey
 @Serializable data object TeardropDemoRoute : NavKey
 @Serializable data object OrbitDemoRoute : NavKey
+@Serializable data object TileDemoRoute : NavKey
 
 private fun BottomBarType.route(): NavKey = when (this) {
     BottomBarType.Halo -> HaloDemoRoute
@@ -65,6 +67,7 @@ private fun BottomBarType.route(): NavKey = when (this) {
     BottomBarType.Peak -> PeakDemoRoute
     BottomBarType.Teardrop -> TeardropDemoRoute
     BottomBarType.Orbit -> OrbitDemoRoute
+    BottomBarType.Tile -> TileDemoRoute
 }
 
 @Composable
@@ -136,6 +139,9 @@ fun AppNavigation(darkTheme: Boolean, onDarkThemeChange: (Boolean) -> Unit) {
             }
             entry<OrbitDemoRoute> {
                 OrbitBottomBarDemo(darkTheme = darkTheme, onDarkThemeChange = onDarkThemeChange)
+            }
+            entry<TileDemoRoute> {
+                TileBottomBarDemo(darkTheme = darkTheme, onDarkThemeChange = onDarkThemeChange)
             }
         },
     )

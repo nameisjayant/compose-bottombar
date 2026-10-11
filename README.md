@@ -230,11 +230,25 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
   </tr>
 </table>
 
+<table>
+  <tr>
+    <th colspan="2">Tile BottomBar</th>
+  </tr>
+  <tr>
+    <td align="center" width="50%">☀️ Light</td>
+    <td align="center" width="50%">🌙 Dark</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/gifs/tile-light.gif" width="400" alt="Tile bottom bar in light theme, switching between tabs" /></td>
+    <td valign="top"><img src="docs/gifs/tile-dark.gif" width="400" alt="Tile bottom bar in dark theme, switching between tabs" /></td>
+  </tr>
+</table>
+
 ## Features
 
 - 🎯 **Ready to use**: pass a list of items and the selected index, and you get a finished bar.
 - 🌗 **Light and dark built in**: every bar ships both palettes and follows the system theme by default.
-- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press, the Socket's gliding bubble, the Gable's bubble sliding along its roof line, the Diamond's quarter-turn spin, the Wave's rings filling into solid orbs, the Rail's rails growing around the selected tab, the Crest's orb popping up as its wings dip, the Scribble's loop drawing itself around the selected icon, the Bead hopping from notch to notch, the Peak's strip stretching from tab to tab, the Teardrop popping out of its pointed tip or the ring rippling out of the Orbit's orb.
+- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press, the Socket's gliding bubble, the Gable's bubble sliding along its roof line, the Diamond's quarter-turn spin, the Wave's rings filling into solid orbs, the Rail's rails growing around the selected tab, the Crest's orb popping up as its wings dip, the Scribble's loop drawing itself around the selected icon, the Bead hopping from notch to notch, the Peak's strip stretching from tab to tab, the Teardrop popping out of its pointed tip, the ring rippling out of the Orbit's orb or the Tile stretching as it slides from tab to tab.
 - 🎨 **Customizable**: change any color through `XxxBottomBarDefaults.lightColors(...)` / `darkColors(...)`, plus label style and window insets.
 - ♿ **Accessible**: items are exposed as selectable tabs in a selectable group, so TalkBack reads them correctly.
 - 🪶 **Light dependencies**: only Compose UI, Foundation and Animation. No Material, icons or navigation library is forced on your app.
@@ -259,6 +273,7 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
 | **Peak** | `PeakBottomBar` | A floating pill of icon-only tabs. The selected icon lifts and fills in over its label, and an accent strip with a small peak in its middle sits on the bottom edge under it, stretching as it slides from tab to tab |
 | **Teardrop** | `TeardropBottomBar` | A flat bar of icon-only tabs. The selected icon fills in inside an accent teardrop, a circle with one pointed corner like a chat bubble, which pops out of its tip with a springy twist |
 | **Orbit** | `OrbitBottomBar` | A floating, rounded bar whose top edge rises into a thin rim arching over the glowing center orb, with a see-through crescent between them. Icon-only tabs; the selected icon lifts and fills in over its label, and a ring ripples out of the orb when it is selected |
+| **Tile** | `TileBottomBar` | A flat, square-cornered bar of icon-only tabs. An accent tile fills the selected tab edge to edge, its icon fills in over a small dot, and the tile stretches as it slides to the next tab |
 
 More bars are on the way.
 
@@ -849,6 +864,37 @@ Colors come from `OrbitBottomBarDefaults.colors(darkTheme)`, `lightColors(...)` 
 | `unselectedContentColor` | Icons of the other side tabs |
 | `orbColor` | Fill of the center orb, and the ring that ripples out when it is selected |
 | `orbContentColor` | Icon inside the orb |
+
+### Tile bottom bar
+
+`TileBarItem` has no center item: any tab can be selected, and every slot gets the same width. The bar only shows icons; the selected one switches to its `selectedIcon` with a dot underneath. `label` is read out by TalkBack.
+
+```kotlin
+val items = listOf(
+    TileBarItem("Home", Icons.Outlined.Home, Icons.Filled.Home),
+    TileBarItem("Search", Icons.Outlined.Search, Icons.Filled.Search),
+    TileBarItem("Store", Icons.Outlined.Storefront, Icons.Filled.Storefront),
+    TileBarItem("Cart", Icons.Outlined.ShoppingCart, Icons.Filled.ShoppingCart),
+    TileBarItem("Profile", Icons.Outlined.Person, Icons.Filled.Person),
+)
+
+TileBottomBar(
+    items = items,
+    selectedIndex = selectedIndex,
+    onItemClick = { selectedIndex = it },
+)
+```
+
+The bar is `BarHeight` (64dp) tall and spans the full width; the tile covers the whole height and width of the selected slot. Icons are `IconSize` (24dp), and the selected one lifts to make room for a `DotSize` (4dp) dot `DotSpacing` (5dp) below it. When the selection changes, the tile's leading edge runs ahead of its trailing edge, so it stretches mid-flight and settles back into one slot (mirrored in right-to-left layouts). The outline is a plain rectangle, so `shadowElevation` works on every API level.
+
+Colors come from `TileBottomBarDefaults.colors(darkTheme)`, `lightColors(...)` and `darkColors(...)`:
+
+| Color | Used for |
+|---|---|
+| `containerColor` | The bar |
+| `indicatorColor` | The tile behind the selected tab |
+| `selectedContentColor` | Icon and dot on the tile (white by default) |
+| `unselectedContentColor` | Icons of the other tabs |
 
 ### With Navigation 3
 
