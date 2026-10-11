@@ -57,6 +57,9 @@ import com.nameisjayant.bottombar.valley.ValleyBottomBarDefaults
 import com.nameisjayant.bottombar.wave.WaveBarItem
 import com.nameisjayant.bottombar.wave.WaveBottomBar
 import com.nameisjayant.bottombar.wave.WaveBottomBarDefaults
+import com.nameisjayant.bottombar.teardrop.TeardropBarItem
+import com.nameisjayant.bottombar.teardrop.TeardropBottomBar
+import com.nameisjayant.bottombar.teardrop.TeardropBottomBarDefaults
 import com.nameisjayant.composebottombar.halo.ShopIcons
 import java.io.File
 import org.junit.Assume.assumeTrue
@@ -129,6 +132,11 @@ class RecordBottomBarGifs {
     private val peakItems = haloItems
         .filter { it.label != "Store" }
         .map { PeakBarItem(it.label, it.icon, it.selectedIcon) }
+
+    // Teardrop was designed with four tabs, so it skips Store.
+    private val teardropItems = haloItems
+        .filter { it.label != "Store" }
+        .map { TeardropBarItem(it.label, it.icon, it.selectedIcon) }
 
     @Test
     fun haloLight() = recordHalo(darkTheme = false)
@@ -395,6 +403,28 @@ class RecordBottomBarGifs {
                 onItemClick = onItemClick,
                 modifier = Modifier.padding(start = 14.dp, end = 14.dp, bottom = 14.dp),
                 colors = PeakBottomBarDefaults.colors(darkTheme),
+                windowInsets = WindowInsets(0.dp),
+            )
+        }
+    }
+
+    @Test
+    fun teardropLight() = recordTeardrop(darkTheme = false)
+
+    @Test
+    fun teardropDark() = recordTeardrop(darkTheme = true)
+
+    private fun recordTeardrop(darkTheme: Boolean) {
+        record(
+            name = if (darkTheme) "teardrop-dark" else "teardrop-light",
+            darkTheme = darkTheme,
+            tour = listOf(0, 1, 2, 3, 1, 0),
+        ) { selectedIndex, onItemClick ->
+            TeardropBottomBar(
+                items = teardropItems,
+                selectedIndex = selectedIndex,
+                onItemClick = onItemClick,
+                colors = TeardropBottomBarDefaults.colors(darkTheme),
                 windowInsets = WindowInsets(0.dp),
             )
         }

@@ -54,4 +54,8 @@ enum class BottomBarType(val title: String, val description: String) {
         title = "PeakBottomBar",
         description = "Floating pill whose selected icon lifts over its label, with a peaked strip that stretches from tab to tab.",
     ),
+    Teardrop(
+        title = "TeardropBottomBar",
+        description = "Flat bar of icons where the selected one fills in inside a teardrop that pops out of its pointed tip.",
+    ),
 }

@@ -72,6 +72,9 @@ import com.nameisjayant.bottombar.valley.ValleyBottomBarDefaults
 import com.nameisjayant.bottombar.wave.WaveBarItem
 import com.nameisjayant.bottombar.wave.WaveBottomBar
 import com.nameisjayant.bottombar.wave.WaveBottomBarDefaults
+import com.nameisjayant.bottombar.teardrop.TeardropBarItem
+import com.nameisjayant.bottombar.teardrop.TeardropBottomBar
+import com.nameisjayant.bottombar.teardrop.TeardropBottomBarDefaults
 import com.nameisjayant.composebottombar.halo.ShopIcons
 
 /** Catalog of every bottom bar. Tapping a card opens that bar's full demo. */
@@ -259,6 +262,13 @@ private fun BottomBarPreview(type: BottomBarType, darkTheme: Boolean, onClick: (
             colors = PeakBottomBarDefaults.colors(darkTheme),
             windowInsets = WindowInsets(0.dp),
         )
+        BottomBarType.Teardrop -> TeardropBottomBar(
+            items = TeardropPreviewItems,
+            selectedIndex = 0,
+            onItemClick = { onClick() },
+            colors = TeardropBottomBarDefaults.colors(darkTheme),
+            windowInsets = WindowInsets(0.dp),
+        )
     }
 }
 
@@ -308,3 +318,8 @@ private val BeadPreviewItems = HaloPreviewItems.map { BeadBarItem(it.label, it.i
 private val PeakPreviewItems = HaloPreviewItems
     .filter { it.label != "Store" }
     .map { PeakBarItem(it.label, it.icon, it.selectedIcon) }
+
+// Teardrop was designed with four tabs, so it skips Store.
+private val TeardropPreviewItems = HaloPreviewItems
+    .filter { it.label != "Store" }
+    .map { TeardropBarItem(it.label, it.icon, it.selectedIcon) }

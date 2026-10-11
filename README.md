@@ -202,11 +202,25 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
   </tr>
 </table>
 
+<table>
+  <tr>
+    <th colspan="2">Teardrop BottomBar</th>
+  </tr>
+  <tr>
+    <td align="center" width="50%">☀️ Light</td>
+    <td align="center" width="50%">🌙 Dark</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/gifs/teardrop-light.gif" width="400" alt="Teardrop bottom bar in light theme, switching between tabs" /></td>
+    <td valign="top"><img src="docs/gifs/teardrop-dark.gif" width="400" alt="Teardrop bottom bar in dark theme, switching between tabs" /></td>
+  </tr>
+</table>
+
 ## Features
 
 - 🎯 **Ready to use**: pass a list of items and the selected index, and you get a finished bar.
 - 🌗 **Light and dark built in**: every bar ships both palettes and follows the system theme by default.
-- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press, the Socket's gliding bubble, the Gable's bubble sliding along its roof line, the Diamond's quarter-turn spin, the Wave's rings filling into solid orbs, the Rail's rails growing around the selected tab, the Crest's orb popping up as its wings dip, the Scribble's loop drawing itself around the selected icon, the Bead hopping from notch to notch or the Peak's strip stretching from tab to tab.
+- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press, the Socket's gliding bubble, the Gable's bubble sliding along its roof line, the Diamond's quarter-turn spin, the Wave's rings filling into solid orbs, the Rail's rails growing around the selected tab, the Crest's orb popping up as its wings dip, the Scribble's loop drawing itself around the selected icon, the Bead hopping from notch to notch, the Peak's strip stretching from tab to tab or the Teardrop popping out of its pointed tip.
 - 🎨 **Customizable**: change any color through `XxxBottomBarDefaults.lightColors(...)` / `darkColors(...)`, plus label style and window insets.
 - ♿ **Accessible**: items are exposed as selectable tabs in a selectable group, so TalkBack reads them correctly.
 - 🪶 **Light dependencies**: only Compose UI, Foundation and Animation. No Material, icons or navigation library is forced on your app.
@@ -229,6 +243,7 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
 | **Scribble** | `ScribbleBottomBar` | A flat bar of icon-only tabs. The selected icon darkens and a hand-drawn accent loop draws itself around it, overshooting its start like a quick pen stroke, before a small dot pops in underneath |
 | **Bead** | `BeadBottomBar` | A flat bar with a small round notch cut into its top edge over the selected tab, holding an accent bead. Icons and labels always show; the notch glides to the new tab while the bead hops along with it, and the tab fills in and turns the accent color |
 | **Peak** | `PeakBottomBar` | A floating pill of icon-only tabs. The selected icon lifts and fills in over its label, and an accent strip with a small peak in its middle sits on the bottom edge under it, stretching as it slides from tab to tab |
+| **Teardrop** | `TeardropBottomBar` | A flat bar of icon-only tabs. The selected icon fills in inside an accent teardrop, a circle with one pointed corner like a chat bubble, which pops out of its tip with a springy twist |
 
 More bars are on the way.
 
@@ -753,6 +768,36 @@ Colors come from `PeakBottomBarDefaults.colors(darkTheme)`, `lightColors(...)` a
 | `containerColor` | The bar background |
 | `indicatorColor` | The peaked strip under the selected tab |
 | `selectedContentColor` | Icon and label of the selected tab (defaults to `indicatorColor`) |
+| `unselectedContentColor` | Icons of the other tabs |
+
+### Teardrop bottom bar
+
+`TeardropBarItem` has no center item: any tab can be selected, and every slot gets the same width. The bar only shows icons; the selected one switches to its `selectedIcon` inside the teardrop. `label` is read out by TalkBack.
+
+```kotlin
+val items = listOf(
+    TeardropBarItem("Home", Icons.Outlined.Home, Icons.Filled.Home),
+    TeardropBarItem("Wallet", Icons.Outlined.AccountBalanceWallet, Icons.Filled.AccountBalanceWallet),
+    TeardropBarItem("Analysis", Icons.Outlined.PieChart, Icons.Filled.PieChart),
+    TeardropBarItem("Profile", Icons.Outlined.Person, Icons.Filled.Person),
+)
+
+TeardropBottomBar(
+    items = items,
+    selectedIndex = selectedIndex,
+    onItemClick = { selectedIndex = it },
+)
+```
+
+The bar is `BarHeight` (64dp) tall and spans the full width. The teardrop is `IndicatorSize` (46dp) across, with its bottom-end corner rounded only by `TipRadius` (3dp); it mirrors in right-to-left layouts. Unselected icons are `IconSize` (26dp) and the icon inside the teardrop is `SelectedIconSize` (22dp). When the selection changes, the old teardrop shrinks back into its tip and the new one grows out of its tip, overshooting slightly as it twists into place. The outline is a plain rectangle, so `shadowElevation` works on every API level.
+
+Colors come from `TeardropBottomBarDefaults.colors(darkTheme)`, `lightColors(...)` and `darkColors(...)`:
+
+| Color | Used for |
+|---|---|
+| `containerColor` | The bar background |
+| `indicatorColor` | The teardrop behind the selected icon |
+| `selectedContentColor` | The icon inside the teardrop (white by default) |
 | `unselectedContentColor` | Icons of the other tabs |
 
 ### With Navigation 3
