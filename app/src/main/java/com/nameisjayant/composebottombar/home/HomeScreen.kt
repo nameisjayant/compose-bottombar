@@ -54,6 +54,9 @@ import com.nameisjayant.bottombar.gable.GableBottomBarDefaults
 import com.nameisjayant.bottombar.halo.HaloBarItem
 import com.nameisjayant.bottombar.halo.HaloBottomBar
 import com.nameisjayant.bottombar.halo.HaloBottomBarDefaults
+import com.nameisjayant.bottombar.peak.PeakBarItem
+import com.nameisjayant.bottombar.peak.PeakBottomBar
+import com.nameisjayant.bottombar.peak.PeakBottomBarDefaults
 import com.nameisjayant.bottombar.rail.RailBarItem
 import com.nameisjayant.bottombar.rail.RailBottomBar
 import com.nameisjayant.bottombar.rail.RailBottomBarDefaults
@@ -248,6 +251,14 @@ private fun BottomBarPreview(type: BottomBarType, darkTheme: Boolean, onClick: (
             colors = BeadBottomBarDefaults.colors(darkTheme),
             windowInsets = WindowInsets(0.dp),
         )
+        BottomBarType.Peak -> PeakBottomBar(
+            items = PeakPreviewItems,
+            selectedIndex = 0,
+            onItemClick = { onClick() },
+            modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
+            colors = PeakBottomBarDefaults.colors(darkTheme),
+            windowInsets = WindowInsets(0.dp),
+        )
     }
 }
 
@@ -292,3 +303,8 @@ private val ScribblePreviewItems = HaloPreviewItems
     .map { ScribbleBarItem(it.label, it.icon) }
 
 private val BeadPreviewItems = HaloPreviewItems.map { BeadBarItem(it.label, it.icon, it.selectedIcon) }
+
+// Peak shows the selected label under its icon, so it skips Store and shows the four tabs it was designed with.
+private val PeakPreviewItems = HaloPreviewItems
+    .filter { it.label != "Store" }
+    .map { PeakBarItem(it.label, it.icon, it.selectedIcon) }

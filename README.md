@@ -188,11 +188,25 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
   </tr>
 </table>
 
+<table>
+  <tr>
+    <th colspan="2">Peak BottomBar</th>
+  </tr>
+  <tr>
+    <td align="center" width="50%">☀️ Light</td>
+    <td align="center" width="50%">🌙 Dark</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/gifs/peak-light.gif" width="400" alt="Peak bottom bar in light theme, switching between tabs" /></td>
+    <td valign="top"><img src="docs/gifs/peak-dark.gif" width="400" alt="Peak bottom bar in dark theme, switching between tabs" /></td>
+  </tr>
+</table>
+
 ## Features
 
 - 🎯 **Ready to use**: pass a list of items and the selected index, and you get a finished bar.
 - 🌗 **Light and dark built in**: every bar ships both palettes and follows the system theme by default.
-- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press, the Socket's gliding bubble, the Gable's bubble sliding along its roof line, the Diamond's quarter-turn spin, the Wave's rings filling into solid orbs, the Rail's rails growing around the selected tab, the Crest's orb popping up as its wings dip, the Scribble's loop drawing itself around the selected icon or the Bead hopping from notch to notch.
+- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press, the Socket's gliding bubble, the Gable's bubble sliding along its roof line, the Diamond's quarter-turn spin, the Wave's rings filling into solid orbs, the Rail's rails growing around the selected tab, the Crest's orb popping up as its wings dip, the Scribble's loop drawing itself around the selected icon, the Bead hopping from notch to notch or the Peak's strip stretching from tab to tab.
 - 🎨 **Customizable**: change any color through `XxxBottomBarDefaults.lightColors(...)` / `darkColors(...)`, plus label style and window insets.
 - ♿ **Accessible**: items are exposed as selectable tabs in a selectable group, so TalkBack reads them correctly.
 - 🪶 **Light dependencies**: only Compose UI, Foundation and Animation. No Material, icons or navigation library is forced on your app.
@@ -214,6 +228,7 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
 | **Crest** | `CrestBottomBar` | A floating bar split into two wings whose top edges climb towards the center, where a glowing orb rests in a round socket between them. Icons and labels always show; when the orb is selected it pops up out of the socket while the wings dip under it |
 | **Scribble** | `ScribbleBottomBar` | A flat bar of icon-only tabs. The selected icon darkens and a hand-drawn accent loop draws itself around it, overshooting its start like a quick pen stroke, before a small dot pops in underneath |
 | **Bead** | `BeadBottomBar` | A flat bar with a small round notch cut into its top edge over the selected tab, holding an accent bead. Icons and labels always show; the notch glides to the new tab while the bead hops along with it, and the tab fills in and turns the accent color |
+| **Peak** | `PeakBottomBar` | A floating pill of icon-only tabs. The selected icon lifts and fills in over its label, and an accent strip with a small peak in its middle sits on the bottom edge under it, stretching as it slides from tab to tab |
 
 More bars are on the way.
 
@@ -707,6 +722,38 @@ Colors come from `BeadBottomBarDefaults.colors(darkTheme)`, `lightColors(...)` a
 | `selectedContentColor` | Icon and label of the selected tab (defaults to `beadColor`) |
 | `unselectedContentColor` | Icons of the other tabs |
 | `unselectedLabelColor` | Labels of the other tabs |
+
+### Peak bottom bar
+
+`PeakBarItem` has no center item: any tab can be selected, and every slot gets the same width. The bar only shows icons until a tab is selected; the selected one switches to its `selectedIcon`, lifts it and shows its `label` underneath. The rest of the time `label` is read out by TalkBack.
+
+```kotlin
+val items = listOf(
+    PeakBarItem("Home", Icons.Outlined.Home, Icons.Filled.Home),
+    PeakBarItem("Wallet", Icons.Outlined.AccountBalanceWallet, Icons.Filled.AccountBalanceWallet),
+    PeakBarItem("Analysis", Icons.Outlined.PieChart, Icons.Filled.PieChart),
+    PeakBarItem("Profile", Icons.Outlined.Person, Icons.Filled.Person),
+)
+
+PeakBottomBar(
+    items = items,
+    selectedIndex = selectedIndex,
+    onItemClick = { selectedIndex = it },
+    // The bar is a floating pill, so keep it off the screen edges.
+    modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+)
+```
+
+The bar is `BarHeight` (70dp) tall with fully rounded ends. The strip under the selected tab is `IndicatorWidth` (60dp) wide and `IndicatorThickness` (4dp) thick, with a `PeakWidth` (16dp) peak rising `PeakHeight` (5dp) from its middle. When the selection changes, the end of the strip facing the new tab moves first and the other end catches up, so the strip stretches on the way and settles back to size. The outline is convex, so `shadowElevation` works on every API level.
+
+Colors come from `PeakBottomBarDefaults.colors(darkTheme)`, `lightColors(...)` and `darkColors(...)`:
+
+| Color | Used for |
+|---|---|
+| `containerColor` | The bar background |
+| `indicatorColor` | The peaked strip under the selected tab |
+| `selectedContentColor` | Icon and label of the selected tab (defaults to `indicatorColor`) |
+| `unselectedContentColor` | Icons of the other tabs |
 
 ### With Navigation 3
 

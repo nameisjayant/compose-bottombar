@@ -39,6 +39,9 @@ import com.nameisjayant.bottombar.gable.GableBottomBarDefaults
 import com.nameisjayant.bottombar.halo.HaloBarItem
 import com.nameisjayant.bottombar.halo.HaloBottomBar
 import com.nameisjayant.bottombar.halo.HaloBottomBarDefaults
+import com.nameisjayant.bottombar.peak.PeakBarItem
+import com.nameisjayant.bottombar.peak.PeakBottomBar
+import com.nameisjayant.bottombar.peak.PeakBottomBarDefaults
 import com.nameisjayant.bottombar.rail.RailBarItem
 import com.nameisjayant.bottombar.rail.RailBottomBar
 import com.nameisjayant.bottombar.rail.RailBottomBarDefaults
@@ -121,6 +124,11 @@ class RecordBottomBarGifs {
         .map { ScribbleBarItem(it.label, it.icon) }
 
     private val beadItems = haloItems.map { BeadBarItem(it.label, it.icon, it.selectedIcon) }
+
+    // Peak shows the selected label under its icon, so it uses the four tabs it was designed with.
+    private val peakItems = haloItems
+        .filter { it.label != "Store" }
+        .map { PeakBarItem(it.label, it.icon, it.selectedIcon) }
 
     @Test
     fun haloLight() = recordHalo(darkTheme = false)
@@ -364,6 +372,29 @@ class RecordBottomBarGifs {
                 selectedIndex = selectedIndex,
                 onItemClick = onItemClick,
                 colors = BeadBottomBarDefaults.colors(darkTheme),
+                windowInsets = WindowInsets(0.dp),
+            )
+        }
+    }
+
+    @Test
+    fun peakLight() = recordPeak(darkTheme = false)
+
+    @Test
+    fun peakDark() = recordPeak(darkTheme = true)
+
+    private fun recordPeak(darkTheme: Boolean) {
+        record(
+            name = if (darkTheme) "peak-dark" else "peak-light",
+            darkTheme = darkTheme,
+            tour = listOf(0, 1, 2, 3, 1, 0),
+        ) { selectedIndex, onItemClick ->
+            PeakBottomBar(
+                items = peakItems,
+                selectedIndex = selectedIndex,
+                onItemClick = onItemClick,
+                modifier = Modifier.padding(start = 14.dp, end = 14.dp, bottom = 14.dp),
+                colors = PeakBottomBarDefaults.colors(darkTheme),
                 windowInsets = WindowInsets(0.dp),
             )
         }
