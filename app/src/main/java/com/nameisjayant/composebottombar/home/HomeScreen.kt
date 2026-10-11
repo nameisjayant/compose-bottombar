@@ -48,6 +48,9 @@ import com.nameisjayant.bottombar.gable.GableBottomBarDefaults
 import com.nameisjayant.bottombar.halo.HaloBarItem
 import com.nameisjayant.bottombar.halo.HaloBottomBar
 import com.nameisjayant.bottombar.halo.HaloBottomBarDefaults
+import com.nameisjayant.bottombar.rail.RailBarItem
+import com.nameisjayant.bottombar.rail.RailBottomBar
+import com.nameisjayant.bottombar.rail.RailBottomBarDefaults
 import com.nameisjayant.bottombar.socket.SocketBarItem
 import com.nameisjayant.bottombar.socket.SocketBottomBar
 import com.nameisjayant.bottombar.socket.SocketBottomBarDefaults
@@ -207,6 +210,13 @@ private fun BottomBarPreview(type: BottomBarType, darkTheme: Boolean, onClick: (
             colors = WaveBottomBarDefaults.colors(darkTheme),
             windowInsets = WindowInsets(0.dp),
         )
+        BottomBarType.Rail -> RailBottomBar(
+            items = RailPreviewItems,
+            selectedIndex = 0,
+            onItemClick = { onClick() },
+            colors = RailBottomBarDefaults.colors(darkTheme),
+            windowInsets = WindowInsets(0.dp),
+        )
     }
 }
 
@@ -237,3 +247,8 @@ private val DiamondPreviewItems = HaloPreviewItems.map { DiamondBarItem(it.label
 private val WavePreviewItems = HaloPreviewItems
     .filter { it.label in setOf("Home", "Cart", "Profile") }
     .map { WaveBarItem(it.label, it.icon, it.selectedIcon) }
+
+// Rail widens the selected tab to fit its label, so it skips Store and shows the four tabs it was designed with.
+private val RailPreviewItems = HaloPreviewItems
+    .filter { it.label != "Store" }
+    .map { RailBarItem(it.label, it.icon, it.selectedIcon) }

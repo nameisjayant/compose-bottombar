@@ -33,6 +33,9 @@ import com.nameisjayant.bottombar.gable.GableBottomBarDefaults
 import com.nameisjayant.bottombar.halo.HaloBarItem
 import com.nameisjayant.bottombar.halo.HaloBottomBar
 import com.nameisjayant.bottombar.halo.HaloBottomBarDefaults
+import com.nameisjayant.bottombar.rail.RailBarItem
+import com.nameisjayant.bottombar.rail.RailBottomBar
+import com.nameisjayant.bottombar.rail.RailBottomBarDefaults
 import com.nameisjayant.bottombar.socket.SocketBarItem
 import com.nameisjayant.bottombar.socket.SocketBottomBar
 import com.nameisjayant.bottombar.socket.SocketBottomBarDefaults
@@ -95,6 +98,11 @@ class RecordBottomBarGifs {
     private val waveItems = haloItems
         .filter { it.label in setOf("Home", "Cart", "Profile") }
         .map { WaveBarItem(it.label, it.icon, it.selectedIcon) }
+
+    // Rail widens the selected tab to fit its label, so it uses the four tabs it was designed with.
+    private val railItems = haloItems
+        .filter { it.label != "Store" }
+        .map { RailBarItem(it.label, it.icon, it.selectedIcon) }
 
     @Test
     fun haloLight() = recordHalo(darkTheme = false)
@@ -252,6 +260,28 @@ class RecordBottomBarGifs {
                 selectedIndex = selectedIndex,
                 onItemClick = onItemClick,
                 colors = WaveBottomBarDefaults.colors(darkTheme),
+                windowInsets = WindowInsets(0.dp),
+            )
+        }
+    }
+
+    @Test
+    fun railLight() = recordRail(darkTheme = false)
+
+    @Test
+    fun railDark() = recordRail(darkTheme = true)
+
+    private fun recordRail(darkTheme: Boolean) {
+        record(
+            name = if (darkTheme) "rail-dark" else "rail-light",
+            darkTheme = darkTheme,
+            tour = listOf(0, 1, 2, 3, 0),
+        ) { selectedIndex, onItemClick ->
+            RailBottomBar(
+                items = railItems,
+                selectedIndex = selectedIndex,
+                onItemClick = onItemClick,
+                colors = RailBottomBarDefaults.colors(darkTheme),
                 windowInsets = WindowInsets(0.dp),
             )
         }

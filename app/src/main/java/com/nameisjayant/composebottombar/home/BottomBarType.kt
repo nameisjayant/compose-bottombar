@@ -34,4 +34,8 @@ enum class BottomBarType(val title: String, val description: String) {
         title = "WaveBottomBar",
         description = "Bar with a rolling wave edge: every tab floats in its own dip, and the selected ring fills into a solid orb.",
     ),
+    Rail(
+        title = "RailBottomBar",
+        description = "Flat bar of icon-only tabs; the selected one widens to show its label, framed by two rails above and below.",
+    ),
 }

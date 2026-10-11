@@ -132,11 +132,25 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
   </tr>
 </table>
 
+<table>
+  <tr>
+    <th colspan="2">Rail BottomBar</th>
+  </tr>
+  <tr>
+    <td align="center" width="50%">☀️ Light</td>
+    <td align="center" width="50%">🌙 Dark</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/gifs/rail-light.gif" width="400" alt="Rail bottom bar in light theme, switching between tabs" /></td>
+    <td valign="top"><img src="docs/gifs/rail-dark.gif" width="400" alt="Rail bottom bar in dark theme, switching between tabs" /></td>
+  </tr>
+</table>
+
 ## Features
 
 - 🎯 **Ready to use**: pass a list of items and the selected index, and you get a finished bar.
 - 🌗 **Light and dark built in**: every bar ships both palettes and follows the system theme by default.
-- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press, the Socket's gliding bubble, the Gable's bubble sliding along its roof line the Diamond's quarter-turn spin or the Wave's rings filling into solid orbs.
+- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press, the Socket's gliding bubble, the Gable's bubble sliding along its roof line, the Diamond's quarter-turn spin, the Wave's rings filling into solid orbs or the Rail's rails growing around the selected tab.
 - 🎨 **Customizable**: change any color through `XxxBottomBarDefaults.lightColors(...)` / `darkColors(...)`, plus label style and window insets.
 - ♿ **Accessible**: items are exposed as selectable tabs in a selectable group, so TalkBack reads them correctly.
 - 🪶 **Light dependencies**: only Compose UI, Foundation and Animation. No Material, icons or navigation library is forced on your app.
@@ -154,6 +168,7 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
 | **Gable** | `GableBottomBar` | A floating bar whose top edge rises like a roof to a peak in the middle. The selected icon lifts into a bubble resting in a socket cut into the slope, and both glide along the roof line from tab to tab |
 | **Diamond** | `DiamondBottomBar` | A flat bar with a glowing diamond centered on its top edge. Icons and labels always show; the selected tab fills in and turns the accent color, and the diamond spins a quarter turn into place when it is selected |
 | **Wave** | `WaveBottomBar` | A flat bar whose top edge rolls in a wave, with every tab floating in its own dip. Unselected tabs show their icon in a thin ring; the selected ring springs into a solid orb with a filled icon, and its label turns the accent color |
+| **Rail** | `RailBottomBar` | A flat bar of icon-only tabs. The selected tab widens to show its label beside a filled icon, and two thin accent rails grow out from its center, one above and one below |
 
 More bars are on the way.
 
@@ -520,6 +535,36 @@ Colors come from `WaveBottomBarDefaults.colors(darkTheme)`, `lightColors(...)` a
 | `ringColor` | Ring around unselected orbs |
 | `unselectedContentColor` | Icons of the other tabs |
 | `unselectedLabelColor` | Labels of the other tabs |
+
+### Rail bottom bar
+
+`RailBarItem` has no center item: any tab can be selected. Unselected tabs show only `icon`; the selected one swaps to `selectedIcon`, shows its `label` beside it and takes a larger share of the width (1.6x), so 3 to 5 items with short labels look best.
+
+```kotlin
+val items = listOf(
+    RailBarItem("Home", Icons.Outlined.Home, Icons.Filled.Home),
+    RailBarItem("Search", Icons.Outlined.Search, Icons.Filled.Search),
+    RailBarItem("Cart", Icons.Outlined.ShoppingCart, Icons.Filled.ShoppingCart),
+    RailBarItem("Profile", Icons.Outlined.Person, Icons.Filled.Person),
+)
+
+RailBottomBar(
+    items = items,
+    selectedIndex = selectedIndex,
+    onItemClick = { selectedIndex = it },
+)
+```
+
+The bar is `BarHeight` (66dp) tall. The rails sit `RailSpacing` (38dp) apart, are `RailThickness` (1dp) thick and reach `RailOverhang` (18dp) past the icon and label on each side. Unselected tabs still expose their label to TalkBack.
+
+Colors come from `RailBottomBarDefaults.colors(darkTheme)`, `lightColors(...)` and `darkColors(...)`:
+
+| Color | Used for |
+|---|---|
+| `containerColor` | The bar background |
+| `selectedContentColor` | Icon and label of the selected tab |
+| `railColor` | The two rails framing the selected tab |
+| `unselectedContentColor` | Icons of the other tabs |
 
 ### With Navigation 3
 
