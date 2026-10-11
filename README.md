@@ -20,17 +20,29 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
 
 ## Preview
 
+### ☀️ Light
+
 <table>
   <tr>
-    <th width="50%">☀️ Light</th>
-    <th width="50%">🌙 Dark</th>
-  </tr>
-  <tr>
-    <td colspan="2" align="center"><b>Halo</b>: a flat bar with a raised, ringed orb in the middle</td>
+    <th width="50%">Halo</th>
+    <th width="50%"></th>
   </tr>
   <tr>
     <td valign="top"><img src="docs/gifs/halo-light.gif" width="400" alt="Halo bottom bar in light theme, switching between tabs" /></td>
+    <td valign="top"></td>
+  </tr>
+</table>
+
+### 🌙 Dark
+
+<table>
+  <tr>
+    <th width="50%">Halo</th>
+    <th width="50%"></th>
+  </tr>
+  <tr>
     <td valign="top"><img src="docs/gifs/halo-dark.gif" width="400" alt="Halo bottom bar in dark theme, switching between tabs" /></td>
+    <td valign="top"></td>
   </tr>
 </table>
 
@@ -219,7 +231,7 @@ Issues and pull requests are welcome. When you add a bar:
 
 1. Add the bar in its own package in `:bottombar`, with an `XxxBottomBarColors` class and `XxxBottomBarDefaults` (light and dark palettes).
 2. Add a `BottomBarType` entry, a route in `AppNavigation` and a preview in `HomeScreen` in `:app`.
-3. Add a light and a dark test to `RecordBottomBarGifs` in `:app`, run `./scripts/record-bottombar-gifs.sh` to render the GIFs into `docs/gifs/` (needs `ffmpeg`), and add a row to the Preview table above (light on the left, dark on the right).
+3. Add a light and a dark test to `RecordBottomBarGifs` in `:app`, run `./scripts/record-bottombar-gifs.sh` to render the GIFs into `docs/gifs/` (needs `ffmpeg`), and add the bar to both Preview tables above: its light GIF in the Light table and its dark GIF in the Dark table, two bars per row.
 
 ## Publishing a release
 
