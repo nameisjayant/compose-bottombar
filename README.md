@@ -90,11 +90,39 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
   </tr>
 </table>
 
+<table>
+  <tr>
+    <th colspan="2">Gable BottomBar</th>
+  </tr>
+  <tr>
+    <td align="center" width="50%">☀️ Light</td>
+    <td align="center" width="50%">🌙 Dark</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/gifs/gable-light.gif" width="400" alt="Gable bottom bar in light theme, switching between tabs" /></td>
+    <td valign="top"><img src="docs/gifs/gable-dark.gif" width="400" alt="Gable bottom bar in dark theme, switching between tabs" /></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th colspan="2">Diamond BottomBar</th>
+  </tr>
+  <tr>
+    <td align="center" width="50%">☀️ Light</td>
+    <td align="center" width="50%">🌙 Dark</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/gifs/diamond-light.gif" width="400" alt="Diamond bottom bar in light theme, switching between tabs" /></td>
+    <td valign="top"><img src="docs/gifs/diamond-dark.gif" width="400" alt="Diamond bottom bar in dark theme, switching between tabs" /></td>
+  </tr>
+</table>
+
 ## Features
 
 - 🎯 **Ready to use**: pass a list of items and the selected index, and you get a finished bar.
 - 🌗 **Light and dark built in**: every bar ships both palettes and follows the system theme by default.
-- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press or the Socket's gliding bubble.
+- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press, the Socket's gliding bubble, the Gable's bubble sliding along its roof line or the Diamond's quarter-turn spin.
 - 🎨 **Customizable**: change any color through `XxxBottomBarDefaults.lightColors(...)` / `darkColors(...)`, plus label style and window insets.
 - ♿ **Accessible**: items are exposed as selectable tabs in a selectable group, so TalkBack reads them correctly.
 - 🪶 **Light dependencies**: only Compose UI, Foundation and Animation. No Material, icons or navigation library is forced on your app.
@@ -109,6 +137,8 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
 | **Cradle** | `CradleBottomBar` | A flat bar whose top edge dips into a smooth notch that cradles a raised orb. Icons and labels always show; the selected tab fills in and turns the accent color, and a ring ripples out of the orb when it is selected |
 | **Valley** | `ValleyBottomBar` | A bar whose whole top edge sags in one smooth curve, with a glowing orb resting in the low point. Icons and labels always show; when the orb is selected it presses into the valley, which sinks with it and springs back |
 | **Socket** | `SocketBottomBar` | A floating pill where the selected icon lifts out of the bar into a bubble, resting in a socket cut into the top edge. Works with any number of tabs; the bubble and its socket glide from tab to tab |
+| **Gable** | `GableBottomBar` | A floating bar whose top edge rises like a roof to a peak in the middle. The selected icon lifts into a bubble resting in a socket cut into the slope, and both glide along the roof line from tab to tab |
+| **Diamond** | `DiamondBottomBar` | A flat bar with a glowing diamond centered on its top edge. Icons and labels always show; the selected tab fills in and turns the accent color, and the diamond spins a quarter turn into place when it is selected |
 
 More bars are on the way.
 
@@ -376,6 +406,74 @@ Colors come from `SocketBottomBarDefaults.colors(darkTheme)`, `lightColors(...)`
 | `selectedContentColor` | Icon inside the bubble and the selected tab's label |
 | `unselectedContentColor` | Icons of the other tabs |
 | `unselectedLabelColor` | Labels of the other tabs |
+
+### Gable bottom bar
+
+`GableBarItem` works like `SocketBarItem`: there is no center orb, so **any tab can be selected into the bubble**, and any number of items works (5 fit the design). Every tab shows its label; the selected one's icon lifts into the bubble as its `selectedIcon`, and its label takes `selectedContentColor`.
+
+```kotlin
+val items = listOf(
+    GableBarItem("Home", Icons.Outlined.Home, Icons.Filled.Home),
+    GableBarItem("Search", Icons.Outlined.Search, Icons.Filled.Search),
+    GableBarItem("Shop", Icons.Outlined.Store, Icons.Filled.Store),
+    GableBarItem("Cart", Icons.Outlined.ShoppingCart, Icons.Filled.ShoppingCart),
+    GableBarItem("Profile", Icons.Outlined.Person, Icons.Filled.Person),
+)
+
+GableBottomBar(
+    items = items,
+    selectedIndex = selectedIndex,
+    onItemClick = { selectedIndex = it },
+    // The bar floats, so keep it off the screen edges.
+    modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+)
+```
+
+The body is `BarHeight` (70dp) tall at its ends and its top edge rises `PeakRise` (20dp) to a peak in the middle. The 50dp bubble (`BubbleSize`) always lines up with the peak, so it stands higher above the slope the further it is from the middle. The socket is shaped by `SocketGap` (the see-through ring around the bubble) and `SocketShoulderRadius`, the corners by `TopCornerRadius` and `BottomCornerRadius`, and `ContentPadding` sets the space between the ends and the outer tabs. The bar has no outer margin of its own, so pass one through `modifier`. `shadowElevation` defaults to `0.dp` and needs API 30+ because of the concave outline.
+
+Colors come from `GableBottomBarDefaults.colors(darkTheme)`, `lightColors(...)` and `darkColors(...)`:
+
+| Color | Used for |
+|---|---|
+| `containerColor` | The bar background |
+| `bubbleColor` | Fill of the bubble; matches `containerColor` by default |
+| `selectedContentColor` | Icon inside the bubble and the selected tab's label |
+| `unselectedContentColor` | Icons of the other tabs |
+| `unselectedLabelColor` | Labels of the other tabs |
+
+### Diamond bottom bar
+
+`DiamondBarItem` works like `HaloBarItem`: pass an **odd number of items** and the middle one becomes the diamond. Side tabs always show their icon and label; the selected one swaps to its `selectedIcon` and takes `selectedContentColor`.
+
+```kotlin
+val items = listOf(
+    DiamondBarItem("Home", Icons.Outlined.Home, Icons.Filled.Home),
+    DiamondBarItem("Search", Icons.Outlined.Search, Icons.Filled.Search),
+    DiamondBarItem("Store", Icons.Outlined.Store, Icons.Filled.Store), // the diamond
+    DiamondBarItem("Cart", Icons.Outlined.ShoppingCart, Icons.Filled.ShoppingCart),
+    DiamondBarItem("Profile", Icons.Outlined.Person, Icons.Filled.Person),
+)
+
+DiamondBottomBar(
+    items = items,
+    selectedIndex = selectedIndex,
+    onItemClick = { selectedIndex = it },
+)
+```
+
+The flat body is `BarHeight` (72dp) tall and runs edge to edge, with its background extending under the navigation bar. The diamond is a `DiamondSize` (48dp) square with `DiamondCornerRadius` (10dp) corners turned on its point, centered on the top edge, so its tip rises about 30dp above the bar inside the bar's own bounds.
+
+Colors come from `DiamondBottomBarDefaults.colors(darkTheme)`, `lightColors(...)` and `darkColors(...)`:
+
+| Color | Used for |
+|---|---|
+| `containerColor` | The bar background |
+| `selectedContentColor` | Icon and label of the selected side tab |
+| `unselectedContentColor` | Icons of the other tabs |
+| `unselectedLabelColor` | Labels of the other tabs |
+| `diamondColor` | Fill of the diamond |
+| `diamondContentColor` | Icon inside the diamond |
+| `diamondGlowColor` | Colored shadow glowing around the diamond |
 
 ### With Navigation 3
 

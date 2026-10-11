@@ -22,4 +22,12 @@ enum class BottomBarType(val title: String, val description: String) {
         title = "SocketBottomBar",
         description = "Floating pill whose selected icon lifts into a bubble, resting in a socket that glides from tab to tab.",
     ),
+    Gable(
+        title = "GableBottomBar",
+        description = "Floating bar with a roof-like peak; the selected icon lifts into a bubble that glides along the slope.",
+    ),
+    Diamond(
+        title = "DiamondBottomBar",
+        description = "Flat bar with a glowing diamond on its top edge, which spins a quarter turn into place when selected.",
+    ),
 }

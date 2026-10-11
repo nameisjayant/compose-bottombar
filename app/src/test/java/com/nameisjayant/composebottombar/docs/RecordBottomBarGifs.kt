@@ -21,9 +21,15 @@ import androidx.compose.ui.unit.dp
 import com.nameisjayant.bottombar.cradle.CradleBarItem
 import com.nameisjayant.bottombar.cradle.CradleBottomBar
 import com.nameisjayant.bottombar.cradle.CradleBottomBarDefaults
+import com.nameisjayant.bottombar.diamond.DiamondBarItem
+import com.nameisjayant.bottombar.diamond.DiamondBottomBar
+import com.nameisjayant.bottombar.diamond.DiamondBottomBarDefaults
 import com.nameisjayant.bottombar.dome.DomeBarItem
 import com.nameisjayant.bottombar.dome.DomeBottomBar
 import com.nameisjayant.bottombar.dome.DomeBottomBarDefaults
+import com.nameisjayant.bottombar.gable.GableBarItem
+import com.nameisjayant.bottombar.gable.GableBottomBar
+import com.nameisjayant.bottombar.gable.GableBottomBarDefaults
 import com.nameisjayant.bottombar.halo.HaloBarItem
 import com.nameisjayant.bottombar.halo.HaloBottomBar
 import com.nameisjayant.bottombar.halo.HaloBottomBarDefaults
@@ -77,6 +83,10 @@ class RecordBottomBarGifs {
     private val socketItems = haloItems
         .filter { it.label != "Store" }
         .map { SocketBarItem(it.label, it.icon, it.selectedIcon) }
+
+    private val gableItems = haloItems.map { GableBarItem(it.label, it.icon, it.selectedIcon) }
+
+    private val diamondItems = haloItems.map { DiamondBarItem(it.label, it.icon, it.selectedIcon) }
 
     @Test
     fun haloLight() = recordHalo(darkTheme = false)
@@ -171,6 +181,47 @@ class RecordBottomBarGifs {
                 onItemClick = onItemClick,
                 modifier = Modifier.padding(start = 14.dp, end = 14.dp, bottom = 14.dp),
                 colors = SocketBottomBarDefaults.colors(darkTheme),
+                windowInsets = WindowInsets(0.dp),
+            )
+        }
+    }
+
+    @Test
+    fun gableLight() = recordGable(darkTheme = false)
+
+    @Test
+    fun gableDark() = recordGable(darkTheme = true)
+
+    private fun recordGable(darkTheme: Boolean) {
+        record(
+            name = if (darkTheme) "gable-dark" else "gable-light",
+            darkTheme = darkTheme,
+            tour = listOf(0, 1, 2, 3, 4, 2, 0),
+        ) { selectedIndex, onItemClick ->
+            GableBottomBar(
+                items = gableItems,
+                selectedIndex = selectedIndex,
+                onItemClick = onItemClick,
+                modifier = Modifier.padding(start = 14.dp, end = 14.dp, bottom = 14.dp),
+                colors = GableBottomBarDefaults.colors(darkTheme),
+                windowInsets = WindowInsets(0.dp),
+            )
+        }
+    }
+
+    @Test
+    fun diamondLight() = recordDiamond(darkTheme = false)
+
+    @Test
+    fun diamondDark() = recordDiamond(darkTheme = true)
+
+    private fun recordDiamond(darkTheme: Boolean) {
+        record(name = if (darkTheme) "diamond-dark" else "diamond-light", darkTheme = darkTheme) { selectedIndex, onItemClick ->
+            DiamondBottomBar(
+                items = diamondItems,
+                selectedIndex = selectedIndex,
+                onItemClick = onItemClick,
+                colors = DiamondBottomBarDefaults.colors(darkTheme),
                 windowInsets = WindowInsets(0.dp),
             )
         }

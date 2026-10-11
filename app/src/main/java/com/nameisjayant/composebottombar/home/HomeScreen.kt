@@ -36,9 +36,15 @@ import androidx.lifecycle.compose.dropUnlessResumed
 import com.nameisjayant.bottombar.cradle.CradleBarItem
 import com.nameisjayant.bottombar.cradle.CradleBottomBar
 import com.nameisjayant.bottombar.cradle.CradleBottomBarDefaults
+import com.nameisjayant.bottombar.diamond.DiamondBarItem
+import com.nameisjayant.bottombar.diamond.DiamondBottomBar
+import com.nameisjayant.bottombar.diamond.DiamondBottomBarDefaults
 import com.nameisjayant.bottombar.dome.DomeBarItem
 import com.nameisjayant.bottombar.dome.DomeBottomBar
 import com.nameisjayant.bottombar.dome.DomeBottomBarDefaults
+import com.nameisjayant.bottombar.gable.GableBarItem
+import com.nameisjayant.bottombar.gable.GableBottomBar
+import com.nameisjayant.bottombar.gable.GableBottomBarDefaults
 import com.nameisjayant.bottombar.halo.HaloBarItem
 import com.nameisjayant.bottombar.halo.HaloBottomBar
 import com.nameisjayant.bottombar.halo.HaloBottomBarDefaults
@@ -177,6 +183,20 @@ private fun BottomBarPreview(type: BottomBarType, darkTheme: Boolean, onClick: (
             colors = SocketBottomBarDefaults.colors(darkTheme),
             windowInsets = WindowInsets(0.dp),
         )
+        BottomBarType.Gable -> GableBottomBar(
+            items = GablePreviewItems,
+            selectedIndex = 0,
+            onItemClick = { onClick() },
+            colors = GableBottomBarDefaults.colors(darkTheme),
+            windowInsets = WindowInsets(0.dp),
+        )
+        BottomBarType.Diamond -> DiamondBottomBar(
+            items = DiamondPreviewItems,
+            selectedIndex = 0,
+            onItemClick = { onClick() },
+            colors = DiamondBottomBarDefaults.colors(darkTheme),
+            windowInsets = WindowInsets(0.dp),
+        )
     }
 }
 
@@ -198,3 +218,7 @@ private val ValleyPreviewItems = HaloPreviewItems.map { ValleyBarItem(it.label, 
 private val SocketPreviewItems = HaloPreviewItems
     .filter { it.label != "Store" }
     .map { SocketBarItem(it.label, it.icon, it.selectedIcon) }
+
+private val GablePreviewItems = HaloPreviewItems.map { GableBarItem(it.label, it.icon, it.selectedIcon) }
+
+private val DiamondPreviewItems = HaloPreviewItems.map { DiamondBarItem(it.label, it.icon, it.selectedIcon) }

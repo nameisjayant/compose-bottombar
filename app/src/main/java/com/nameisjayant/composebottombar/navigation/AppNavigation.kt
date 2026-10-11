@@ -13,7 +13,9 @@ import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import com.nameisjayant.composebottombar.cradle.CradleBottomBarDemo
+import com.nameisjayant.composebottombar.diamond.DiamondBottomBarDemo
 import com.nameisjayant.composebottombar.dome.DomeBottomBarDemo
+import com.nameisjayant.composebottombar.gable.GableBottomBarDemo
 import com.nameisjayant.composebottombar.halo.HaloBottomBarDemo
 import com.nameisjayant.composebottombar.home.BottomBarType
 import com.nameisjayant.composebottombar.home.HomeScreen
@@ -28,6 +30,8 @@ import kotlinx.serialization.Serializable
 @Serializable data object CradleDemoRoute : NavKey
 @Serializable data object ValleyDemoRoute : NavKey
 @Serializable data object SocketDemoRoute : NavKey
+@Serializable data object GableDemoRoute : NavKey
+@Serializable data object DiamondDemoRoute : NavKey
 
 private fun BottomBarType.route(): NavKey = when (this) {
     BottomBarType.Halo -> HaloDemoRoute
@@ -35,6 +39,8 @@ private fun BottomBarType.route(): NavKey = when (this) {
     BottomBarType.Cradle -> CradleDemoRoute
     BottomBarType.Valley -> ValleyDemoRoute
     BottomBarType.Socket -> SocketDemoRoute
+    BottomBarType.Gable -> GableDemoRoute
+    BottomBarType.Diamond -> DiamondDemoRoute
 }
 
 @Composable
@@ -76,6 +82,12 @@ fun AppNavigation(darkTheme: Boolean, onDarkThemeChange: (Boolean) -> Unit) {
             }
             entry<SocketDemoRoute> {
                 SocketBottomBarDemo(darkTheme = darkTheme, onDarkThemeChange = onDarkThemeChange)
+            }
+            entry<GableDemoRoute> {
+                GableBottomBarDemo(darkTheme = darkTheme, onDarkThemeChange = onDarkThemeChange)
+            }
+            entry<DiamondDemoRoute> {
+                DiamondBottomBarDemo(darkTheme = darkTheme, onDarkThemeChange = onDarkThemeChange)
             }
         },
     )
