@@ -67,7 +67,7 @@ mavenPublishing {
         name.set("Compose Bottombar")
         description.set("A collection of beautiful, animated, customizable bottom bars for Jetpack Compose.")
         inceptionYear.set("2026")
-        url.set("https://github.com/nameisjayant/Compose-Bottombar")
+        url.set("https://github.com/nameisjayant/compose-bottombar")
         licenses {
             license {
                 name.set("The Apache License, Version 2.0")
@@ -83,9 +83,9 @@ mavenPublishing {
             }
         }
         scm {
-            url.set("https://github.com/nameisjayant/Compose-Bottombar")
-            connection.set("scm:git:git://github.com/nameisjayant/Compose-Bottombar.git")
-            developerConnection.set("scm:git:ssh://git@github.com/nameisjayant/Compose-Bottombar.git")
+            url.set("https://github.com/nameisjayant/compose-bottombar")
+            connection.set("scm:git:git://github.com/nameisjayant/compose-bottombar.git")
+            developerConnection.set("scm:git:ssh://git@github.com/nameisjayant/compose-bottombar.git")
         }
     }
 }

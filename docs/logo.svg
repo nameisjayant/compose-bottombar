@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="108" height="108" viewBox="18 18 72 72">
+  <!-- Mirrors app/src/main/res/drawable/ic_launcher_{background,foreground}.xml -->
+  <defs>
+    <linearGradient id="bg" x1="18" y1="18" x2="90" y2="90" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5B3CE0"/>
+      <stop offset="1" stop-color="#3F63EA"/>
+    </linearGradient>
+  </defs>
+  <rect x="18" y="18" width="72" height="72" rx="18" fill="url(#bg)"/>
+  <g transform="translate(54 54) scale(0.85) translate(-54 -54)" fill-rule="evenodd">
+    <path fill="#FFFFFF" fill-opacity="0.35" d="M39,50a15,15 0,1 0,30 0a15,15 0,1 0,-30 0zM43,50a11,11 0,1 1,22 0a11,11 0,1 1,-22 0z"/>
+    <path fill="#FFFFFF" d="M32,57H41.88A14,14 0,0 0,66.12 57H76a8,8 0,0 1,8 8a8,8 0,0 1,-8 8H32a8,8 0,0 1,-8 -8a8,8 0,0 1,8 -8zM30.5,65a2.5,2.5 0,1 0,5 0a2.5,2.5 0,1 0,-5 0zM72.5,65a2.5,2.5 0,1 0,5 0a2.5,2.5 0,1 0,-5 0z"/>
+    <path fill="#FFFFFF" d="M43,50a11,11 0,1 1,22 0a11,11 0,1 1,-22 0zM50,50a4,4 0,1 0,8 0a4,4 0,1 0,-8 0z"/>
+  </g>
+</svg>

@@ -35,6 +35,17 @@ android {
     buildFeatures {
         compose = true
     }
+    testOptions {
+        // Robolectric needs merged resources to render the bottom bar GIFs in RecordBottomBarGifs.
+        unitTests.isIncludeAndroidResources = true
+    }
+}
+
+tasks.withType<Test>().configureEach {
+    // Set by scripts/record-bottombar-gifs.sh; RecordBottomBarGifs is skipped without it.
+    providers.gradleProperty("bottomBarGifDir").orNull?.let { systemProperty("bottomBarGifDir", it) }
+    // Robolectric's SDK 36 sandbox reaches into JDK internals that newer JDKs no longer export.
+    jvmArgs("--add-exports=java.base/jdk.internal.access=ALL-UNNAMED")
 }
 
 dependencies {
@@ -52,6 +63,9 @@ dependencies {
     implementation(libs.androidx.navigation3.ui)
     implementation(libs.kotlinx.serialization.core)
     testImplementation(libs.junit)
+    testImplementation(platform(libs.androidx.compose.bom))
+    testImplementation(libs.androidx.compose.ui.test.junit4)
+    testImplementation(libs.robolectric)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)
