@@ -18,6 +18,9 @@ import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.unit.dp
+import com.nameisjayant.bottombar.dome.DomeBarItem
+import com.nameisjayant.bottombar.dome.DomeBottomBar
+import com.nameisjayant.bottombar.dome.DomeBottomBarDefaults
 import com.nameisjayant.bottombar.halo.HaloBarItem
 import com.nameisjayant.bottombar.halo.HaloBottomBar
 import com.nameisjayant.bottombar.halo.HaloBottomBarDefaults
@@ -55,6 +58,8 @@ class RecordBottomBarGifs {
         HaloBarItem("Profile", ShopIcons.Profile, ShopIcons.ProfileFilled),
     )
 
+    private val domeItems = haloItems.map { DomeBarItem(it.label, it.icon, it.selectedIcon) }
+
     @Test
     fun haloLight() = recordHalo(darkTheme = false)
 
@@ -68,6 +73,26 @@ class RecordBottomBarGifs {
                 selectedIndex = selectedIndex,
                 onItemClick = onItemClick,
                 colors = HaloBottomBarDefaults.colors(darkTheme),
+                windowInsets = WindowInsets(0.dp),
+            )
+        }
+    }
+
+    @Test
+    fun domeLight() = recordDome(darkTheme = false)
+
+    @Test
+    fun domeDark() = recordDome(darkTheme = true)
+
+    private fun recordDome(darkTheme: Boolean) {
+        record(name = if (darkTheme) "dome-dark" else "dome-light", darkTheme = darkTheme) { selectedIndex, onItemClick ->
+            DomeBottomBar(
+                items = domeItems,
+                selectedIndex = selectedIndex,
+                onItemClick = onItemClick,
+                modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 12.dp),
+                colors = DomeBottomBarDefaults.colors(darkTheme),
+                shadowElevation = if (darkTheme) 0.dp else 8.dp,
                 windowInsets = WindowInsets(0.dp),
             )
         }

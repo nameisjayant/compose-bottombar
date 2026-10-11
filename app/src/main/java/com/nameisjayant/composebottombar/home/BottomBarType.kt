@@ -6,4 +6,8 @@ enum class BottomBarType(val title: String, val description: String) {
         title = "HaloBottomBar",
         description = "Flat bar with a raised halo around the center item. Selection animates the icon and label.",
     ),
+    Dome(
+        title = "DomeBottomBar",
+        description = "Rounded bar whose top swells into a dome around a glowing orb. Labels slide in under the selected tab.",
+    ),
 }

@@ -12,6 +12,7 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import com.nameisjayant.composebottombar.dome.DomeBottomBarDemo
 import com.nameisjayant.composebottombar.halo.HaloBottomBarDemo
 import com.nameisjayant.composebottombar.home.BottomBarType
 import com.nameisjayant.composebottombar.home.HomeScreen
@@ -20,9 +21,11 @@ import kotlinx.serialization.Serializable
 /** Top-level routes: the catalog, and one full-screen demo per bottom bar. */
 @Serializable data object CatalogRoute : NavKey
 @Serializable data object HaloDemoRoute : NavKey
+@Serializable data object DomeDemoRoute : NavKey
 
 private fun BottomBarType.route(): NavKey = when (this) {
     BottomBarType.Halo -> HaloDemoRoute
+    BottomBarType.Dome -> DomeDemoRoute
 }
 
 @Composable
@@ -52,6 +55,9 @@ fun AppNavigation(darkTheme: Boolean, onDarkThemeChange: (Boolean) -> Unit) {
             }
             entry<HaloDemoRoute> {
                 HaloBottomBarDemo(darkTheme = darkTheme, onDarkThemeChange = onDarkThemeChange)
+            }
+            entry<DomeDemoRoute> {
+                DomeBottomBarDemo(darkTheme = darkTheme, onDarkThemeChange = onDarkThemeChange)
             }
         },
     )

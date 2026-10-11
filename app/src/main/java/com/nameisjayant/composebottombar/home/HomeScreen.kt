@@ -33,6 +33,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.dropUnlessResumed
+import com.nameisjayant.bottombar.dome.DomeBarItem
+import com.nameisjayant.bottombar.dome.DomeBottomBar
+import com.nameisjayant.bottombar.dome.DomeBottomBarDefaults
 import com.nameisjayant.bottombar.halo.HaloBarItem
 import com.nameisjayant.bottombar.halo.HaloBottomBar
 import com.nameisjayant.bottombar.halo.HaloBottomBarDefaults
@@ -136,6 +139,14 @@ private fun BottomBarPreview(type: BottomBarType, darkTheme: Boolean, onClick: (
             colors = HaloBottomBarDefaults.colors(darkTheme),
             windowInsets = WindowInsets(0.dp),
         )
+        BottomBarType.Dome -> DomeBottomBar(
+            items = DomePreviewItems,
+            selectedIndex = 0,
+            onItemClick = { onClick() },
+            modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
+            colors = DomeBottomBarDefaults.colors(darkTheme),
+            windowInsets = WindowInsets(0.dp),
+        )
     }
 }
 
@@ -146,3 +157,5 @@ private val HaloPreviewItems = listOf(
     HaloBarItem("Cart", ShopIcons.Cart, ShopIcons.CartFilled),
     HaloBarItem("Profile", ShopIcons.Profile, ShopIcons.ProfileFilled),
 )
+
+private val DomePreviewItems = HaloPreviewItems.map { DomeBarItem(it.label, it.icon, it.selectedIcon) }

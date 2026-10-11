@@ -20,29 +20,31 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
 
 ## Preview
 
-### ☀️ Light
-
 <table>
   <tr>
-    <th width="50%">Halo</th>
-    <th width="50%"></th>
+    <th colspan="2">Halo BottomBar</th>
+  </tr>
+  <tr>
+    <td align="center" width="50%">☀️ Light</td>
+    <td align="center" width="50%">🌙 Dark</td>
   </tr>
   <tr>
     <td valign="top"><img src="docs/gifs/halo-light.gif" width="400" alt="Halo bottom bar in light theme, switching between tabs" /></td>
-    <td valign="top"></td>
+    <td valign="top"><img src="docs/gifs/halo-dark.gif" width="400" alt="Halo bottom bar in dark theme, switching between tabs" /></td>
   </tr>
 </table>
 
-### 🌙 Dark
-
 <table>
   <tr>
-    <th width="50%">Halo</th>
-    <th width="50%"></th>
+    <th colspan="2">Dome BottomBar</th>
   </tr>
   <tr>
-    <td valign="top"><img src="docs/gifs/halo-dark.gif" width="400" alt="Halo bottom bar in dark theme, switching between tabs" /></td>
-    <td valign="top"></td>
+    <td align="center" width="50%">☀️ Light</td>
+    <td align="center" width="50%">🌙 Dark</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/gifs/dome-light.gif" width="400" alt="Dome bottom bar in light theme, switching between tabs" /></td>
+    <td valign="top"><img src="docs/gifs/dome-dark.gif" width="400" alt="Dome bottom bar in dark theme, switching between tabs" /></td>
   </tr>
 </table>
 
@@ -50,7 +52,7 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
 
 - 🎯 **Ready to use**: pass a list of items and the selected index, and you get a finished bar.
 - 🌗 **Light and dark built in**: every bar ships both palettes and follows the system theme by default.
-- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst.
+- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst or the Dome's sliding labels.
 - 🎨 **Customizable**: change any color through `XxxBottomBarDefaults.lightColors(...)` / `darkColors(...)`, plus label style and window insets.
 - ♿ **Accessible**: items are exposed as selectable tabs in a selectable group, so TalkBack reads them correctly.
 - 🪶 **Light dependencies**: only Compose UI, Foundation and Animation. No Material, icons or navigation library is forced on your app.
@@ -61,6 +63,7 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
 | Bar | Composable | Highlights |
 |---|---|---|
 | **Halo** | `HaloBottomBar` | A flat bar with a raised, ringed center orb. Outlined/filled icon swap, spring bounce on selection, and a ring that ripples out of the orb when it is selected |
+| **Dome** | `DomeBottomBar` | A floating, rounded bar whose top edge swells into a dome around a glowing orb. Icon-only tabs; the selected one fills in and its label slides up underneath |
 
 More bars are on the way.
 
@@ -176,6 +179,7 @@ HaloBottomBar(
 | `unselectedLabelColor` | Labels of the other side tabs |
 | `haloColor` | Fill of the center orb |
 | `haloRingColor` | Ring around the orb, and the burst when it is selected |
+| **Dome** | `DomeBottomBar` | A floating, rounded bar whose top edge swells into a dome around a glowing orb. Icon-only tabs; the selected one fills in and its label slides up underneath |
 | `haloContentColor` | Icon inside the orb |
 
 ### Label style and insets
@@ -193,9 +197,45 @@ HaloBottomBar(
 
 The bar is `BarHeight` (64dp) tall, and the halo rises `HaloOverhang` (22dp) above it, so leave that much room above the bar for the orb. `HaloBottomBarDefaults` also exposes `HaloSize`, `HaloRingWidth`, `IconSize` and `HaloIconSize`.
 
+### Dome bottom bar
+
+`DomeBarItem` works like `HaloBarItem`, and the **middle item becomes the orb** inside the dome, so pass an odd number of items. Side tabs show only their icon; the selected one switches to its `selectedIcon` and its label slides in underneath.
+
+```kotlin
+val items = listOf(
+    DomeBarItem("Home", Icons.Outlined.Home, Icons.Filled.Home),
+    DomeBarItem("Search", Icons.Outlined.Search, Icons.Filled.Search),
+    DomeBarItem("Store", Icons.Outlined.Storefront, Icons.Filled.Storefront), // the orb
+    DomeBarItem("Cart", Icons.Outlined.ShoppingCart, Icons.Filled.ShoppingCart),
+    DomeBarItem("Profile", Icons.Outlined.Person, Icons.Filled.Person),
+)
+
+DomeBottomBar(
+    items = items,
+    selectedIndex = selectedIndex,
+    onItemClick = { selectedIndex = it },
+    // All four corners are rounded, so it looks best floating a little above the screen edge.
+    modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 12.dp),
+    shadowElevation = 8.dp,
+)
+```
+
+The bar is `BarHeight` (66dp) tall plus `DomeRise` (28dp) for the dome, all inside its own bounds, so no extra room is needed above it. `shadowElevation` defaults to `0.dp`; the dome makes the outline concave, which Android can only cast a shadow for on API 30+.
+
+Colors follow the same pattern, through `DomeBottomBarDefaults.colors(darkTheme)`, `lightColors(...)` and `darkColors(...)`:
+
+| Color | Used for |
+|---|---|
+| `containerColor` | The bar and its dome |
+| `selectedContentColor` | Icon and label of the selected side tab |
+| `unselectedContentColor` | Icons of the other side tabs |
+| `orbColor` | Fill of the center orb |
+| `orbGlowColor` | Glow under the orb, and the pulse when it is selected |
+| `orbContentColor` | Icon inside the orb |
+
 ### With Navigation 3
 
-The sample app gives each tab its own back stack with [Navigation 3](https://developer.android.com/guide/navigation/navigation-3), and switching tabs keeps every stack intact. The wiring is just:
+The sample app gives each tab its own back stack with [Navigation 3](https://developer.android.com/guide/navigation/navigation-3), and switching tabs keeps every stack intact. Every bar is wired the same way:
 
 ```kotlin
 HaloBottomBar(
@@ -205,7 +245,7 @@ HaloBottomBar(
 )
 ```
 
-See [`HaloBottomBarDemo.kt`](app/src/main/java/com/nameisjayant/composebottombar/halo/HaloBottomBarDemo.kt) for the full setup.
+See [`ShopTabsDemo.kt`](app/src/main/java/com/nameisjayant/composebottombar/demo/ShopTabsDemo.kt) for the full setup, shared by every bar's demo.
 
 ## Sample app
 
@@ -231,7 +271,7 @@ Issues and pull requests are welcome. When you add a bar:
 
 1. Add the bar in its own package in `:bottombar`, with an `XxxBottomBarColors` class and `XxxBottomBarDefaults` (light and dark palettes).
 2. Add a `BottomBarType` entry, a route in `AppNavigation` and a preview in `HomeScreen` in `:app`.
-3. Add a light and a dark test to `RecordBottomBarGifs` in `:app`, run `./scripts/record-bottombar-gifs.sh` to render the GIFs into `docs/gifs/` (needs `ffmpeg`), and add the bar to both Preview tables above: its light GIF in the Light table and its dark GIF in the Dark table, two bars per row.
+3. Add a light and a dark test to `RecordBottomBarGifs` in `:app`, run `./scripts/record-bottombar-gifs.sh` to render the GIFs into `docs/gifs/` (needs `ffmpeg`), and add a Preview card for the bar above: a table titled `<Name> BottomBar` with its light GIF on the left and its dark GIF on the right.
 
 ## Publishing a release
 
