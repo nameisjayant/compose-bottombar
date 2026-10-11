@@ -48,11 +48,25 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
   </tr>
 </table>
 
+<table>
+  <tr>
+    <th colspan="2">Cradle BottomBar</th>
+  </tr>
+  <tr>
+    <td align="center" width="50%">☀️ Light</td>
+    <td align="center" width="50%">🌙 Dark</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/gifs/cradle-light.gif" width="400" alt="Cradle bottom bar in light theme, switching between tabs" /></td>
+    <td valign="top"><img src="docs/gifs/cradle-dark.gif" width="400" alt="Cradle bottom bar in dark theme, switching between tabs" /></td>
+  </tr>
+</table>
+
 ## Features
 
 - 🎯 **Ready to use**: pass a list of items and the selected index, and you get a finished bar.
 - 🌗 **Light and dark built in**: every bar ships both palettes and follows the system theme by default.
-- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst or the Dome's sliding labels.
+- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels or the Cradle's orb ripple.
 - 🎨 **Customizable**: change any color through `XxxBottomBarDefaults.lightColors(...)` / `darkColors(...)`, plus label style and window insets.
 - ♿ **Accessible**: items are exposed as selectable tabs in a selectable group, so TalkBack reads them correctly.
 - 🪶 **Light dependencies**: only Compose UI, Foundation and Animation. No Material, icons or navigation library is forced on your app.
@@ -64,6 +78,7 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
 |---|---|---|
 | **Halo** | `HaloBottomBar` | A flat bar with a raised, ringed center orb. Outlined/filled icon swap, spring bounce on selection, and a ring that ripples out of the orb when it is selected |
 | **Dome** | `DomeBottomBar` | A floating, rounded bar whose top edge swells into a dome around a glowing orb. Icon-only tabs; the selected one fills in and its label slides up underneath |
+| **Cradle** | `CradleBottomBar` | A flat bar whose top edge dips into a smooth notch that cradles a raised orb. Icons and labels always show; the selected tab fills in and turns the accent color, and a ring ripples out of the orb when it is selected |
 
 More bars are on the way.
 
@@ -179,7 +194,6 @@ HaloBottomBar(
 | `unselectedLabelColor` | Labels of the other side tabs |
 | `haloColor` | Fill of the center orb |
 | `haloRingColor` | Ring around the orb, and the burst when it is selected |
-| **Dome** | `DomeBottomBar` | A floating, rounded bar whose top edge swells into a dome around a glowing orb. Icon-only tabs; the selected one fills in and its label slides up underneath |
 | `haloContentColor` | Icon inside the orb |
 
 ### Label style and insets
@@ -231,6 +245,40 @@ Colors follow the same pattern, through `DomeBottomBarDefaults.colors(darkTheme)
 | `unselectedContentColor` | Icons of the other side tabs |
 | `orbColor` | Fill of the center orb |
 | `orbGlowColor` | Glow under the orb, and the pulse when it is selected |
+| `orbContentColor` | Icon inside the orb |
+
+### Cradle bottom bar
+
+`CradleBarItem` works the same way: the **middle item becomes the orb** sitting in the notch, so pass an odd number of items. Every side tab shows its icon and label; the selected one switches to its `selectedIcon` and takes `selectedContentColor`.
+
+```kotlin
+val items = listOf(
+    CradleBarItem("Home", Icons.Outlined.Home, Icons.Filled.Home),
+    CradleBarItem("Search", Icons.Outlined.Search, Icons.Filled.Search),
+    CradleBarItem("Store", Icons.Outlined.Storefront, Icons.Filled.Storefront), // the orb
+    CradleBarItem("Cart", Icons.Outlined.ShoppingCart, Icons.Filled.ShoppingCart),
+    CradleBarItem("Profile", Icons.Outlined.Person, Icons.Filled.Person),
+)
+
+CradleBottomBar(
+    items = items,
+    selectedIndex = selectedIndex,
+    onItemClick = { selectedIndex = it },
+    shadowElevation = 8.dp,
+)
+```
+
+The bar is `BarHeight` (72dp) tall and the orb rises `OrbOverhang` (34dp) above it, all inside the bar's own bounds. The notch is shaped by `OrbSize`, `OrbLift`, `NotchGap` and `NotchShoulderRadius`. As with Dome, `shadowElevation` defaults to `0.dp` and needs API 30+ because of the concave outline.
+
+Colors come from `CradleBottomBarDefaults.colors(darkTheme)`, `lightColors(...)` and `darkColors(...)`:
+
+| Color | Used for |
+|---|---|
+| `containerColor` | The bar background |
+| `selectedContentColor` | Icon and label of the selected side tab |
+| `unselectedContentColor` | Icons of the other side tabs |
+| `unselectedLabelColor` | Labels of the other side tabs |
+| `orbColor` | Fill of the center orb, and the ring that ripples out when it is selected |
 | `orbContentColor` | Icon inside the orb |
 
 ### With Navigation 3

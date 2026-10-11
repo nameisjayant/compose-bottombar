@@ -33,6 +33,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.dropUnlessResumed
+import com.nameisjayant.bottombar.cradle.CradleBarItem
+import com.nameisjayant.bottombar.cradle.CradleBottomBar
+import com.nameisjayant.bottombar.cradle.CradleBottomBarDefaults
 import com.nameisjayant.bottombar.dome.DomeBarItem
 import com.nameisjayant.bottombar.dome.DomeBottomBar
 import com.nameisjayant.bottombar.dome.DomeBottomBarDefaults
@@ -147,6 +150,13 @@ private fun BottomBarPreview(type: BottomBarType, darkTheme: Boolean, onClick: (
             colors = DomeBottomBarDefaults.colors(darkTheme),
             windowInsets = WindowInsets(0.dp),
         )
+        BottomBarType.Cradle -> CradleBottomBar(
+            items = CradlePreviewItems,
+            selectedIndex = 0,
+            onItemClick = { onClick() },
+            colors = CradleBottomBarDefaults.colors(darkTheme),
+            windowInsets = WindowInsets(0.dp),
+        )
     }
 }
 
@@ -159,3 +169,5 @@ private val HaloPreviewItems = listOf(
 )
 
 private val DomePreviewItems = HaloPreviewItems.map { DomeBarItem(it.label, it.icon, it.selectedIcon) }
+
+private val CradlePreviewItems = HaloPreviewItems.map { CradleBarItem(it.label, it.icon, it.selectedIcon) }

@@ -10,4 +10,8 @@ enum class BottomBarType(val title: String, val description: String) {
         title = "DomeBottomBar",
         description = "Rounded bar whose top swells into a dome around a glowing orb. Labels slide in under the selected tab.",
     ),
+    Cradle(
+        title = "CradleBottomBar",
+        description = "Flat bar whose top edge dips into a notch that cradles a raised orb. Icons fill in on selection.",
+    ),
 }

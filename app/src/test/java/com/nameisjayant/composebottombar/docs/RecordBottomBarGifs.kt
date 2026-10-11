@@ -18,6 +18,9 @@ import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.unit.dp
+import com.nameisjayant.bottombar.cradle.CradleBarItem
+import com.nameisjayant.bottombar.cradle.CradleBottomBar
+import com.nameisjayant.bottombar.cradle.CradleBottomBarDefaults
 import com.nameisjayant.bottombar.dome.DomeBarItem
 import com.nameisjayant.bottombar.dome.DomeBottomBar
 import com.nameisjayant.bottombar.dome.DomeBottomBarDefaults
@@ -60,6 +63,8 @@ class RecordBottomBarGifs {
 
     private val domeItems = haloItems.map { DomeBarItem(it.label, it.icon, it.selectedIcon) }
 
+    private val cradleItems = haloItems.map { CradleBarItem(it.label, it.icon, it.selectedIcon) }
+
     @Test
     fun haloLight() = recordHalo(darkTheme = false)
 
@@ -92,6 +97,25 @@ class RecordBottomBarGifs {
                 onItemClick = onItemClick,
                 modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 12.dp),
                 colors = DomeBottomBarDefaults.colors(darkTheme),
+                shadowElevation = if (darkTheme) 0.dp else 8.dp,
+                windowInsets = WindowInsets(0.dp),
+            )
+        }
+    }
+
+    @Test
+    fun cradleLight() = recordCradle(darkTheme = false)
+
+    @Test
+    fun cradleDark() = recordCradle(darkTheme = true)
+
+    private fun recordCradle(darkTheme: Boolean) {
+        record(name = if (darkTheme) "cradle-dark" else "cradle-light", darkTheme = darkTheme) { selectedIndex, onItemClick ->
+            CradleBottomBar(
+                items = cradleItems,
+                selectedIndex = selectedIndex,
+                onItemClick = onItemClick,
+                colors = CradleBottomBarDefaults.colors(darkTheme),
                 shadowElevation = if (darkTheme) 0.dp else 8.dp,
                 windowInsets = WindowInsets(0.dp),
             )

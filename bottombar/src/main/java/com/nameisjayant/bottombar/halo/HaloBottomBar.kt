@@ -313,6 +313,9 @@ private fun HaloButton(
         if (selected && !wasSelected) {
             burst.snapTo(0f)
             burst.animateTo(1f, tween(BurstDurationMillis, easing = FastOutSlowInEasing))
+        } else if (!selected) {
+            // Deselected before the animation finished: it was cancelled mid-way, so clear it.
+            burst.snapTo(1f)
         }
         wasSelected = selected
     }
@@ -385,6 +388,9 @@ private fun rememberSelectionBounce(selected: Boolean, from: Float): Animatable<
                     stiffness = Spring.StiffnessMediumLow,
                 ),
             )
+        } else if (!selected && scale.value != 1f) {
+            // Deselected mid-bounce: the bounce above was cancelled, so settle back instead of staying shrunk.
+            scale.animateTo(1f, spring(stiffness = Spring.StiffnessMedium))
         }
         wasSelected = selected
     }
