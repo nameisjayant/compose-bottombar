@@ -21,6 +21,9 @@ import androidx.compose.ui.unit.dp
 import com.nameisjayant.bottombar.bead.BeadBarItem
 import com.nameisjayant.bottombar.bead.BeadBottomBar
 import com.nameisjayant.bottombar.bead.BeadBottomBarDefaults
+import com.nameisjayant.bottombar.bloom.BloomBarItem
+import com.nameisjayant.bottombar.bloom.BloomBottomBar
+import com.nameisjayant.bottombar.bloom.BloomBottomBarDefaults
 import com.nameisjayant.bottombar.buoy.BuoyBarItem
 import com.nameisjayant.bottombar.buoy.BuoyBottomBar
 import com.nameisjayant.bottombar.buoy.BuoyBottomBarDefaults
@@ -132,6 +135,11 @@ class RecordBottomBarGifs {
     private val spotlightItems = haloItems
         .filter { it.label != "Store" }
         .map { SpotlightBarItem(it.label, it.icon, it.selectedIcon) }
+
+    // Bloom shows the selected label beside its orb, so it uses the four tabs it was designed with.
+    private val bloomItems = haloItems
+        .filter { it.label != "Store" }
+        .map { BloomBarItem(it.label, it.icon, it.selectedIcon) }
 
     // Buoy shows the selected label under its icon, so it uses the four tabs it was designed with.
     private val buoyItems = haloItems
@@ -614,6 +622,29 @@ class RecordBottomBarGifs {
                 onItemClick = onItemClick,
                 modifier = Modifier.padding(start = 14.dp, end = 14.dp, bottom = 14.dp),
                 colors = BuoyBottomBarDefaults.colors(darkTheme),
+                windowInsets = WindowInsets(0.dp),
+            )
+        }
+    }
+
+    @Test
+    fun bloomLight() = recordBloom(darkTheme = false)
+
+    @Test
+    fun bloomDark() = recordBloom(darkTheme = true)
+
+    private fun recordBloom(darkTheme: Boolean) {
+        record(
+            name = if (darkTheme) "bloom-dark" else "bloom-light",
+            darkTheme = darkTheme,
+            tour = listOf(0, 1, 2, 3, 1, 0),
+        ) { selectedIndex, onItemClick ->
+            BloomBottomBar(
+                items = bloomItems,
+                selectedIndex = selectedIndex,
+                onItemClick = onItemClick,
+                colors = BloomBottomBarDefaults.colors(darkTheme),
+                shadowElevation = if (darkTheme) 0.dp else 8.dp,
                 windowInsets = WindowInsets(0.dp),
             )
         }

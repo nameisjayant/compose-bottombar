@@ -36,6 +36,9 @@ import androidx.lifecycle.compose.dropUnlessResumed
 import com.nameisjayant.bottombar.bead.BeadBarItem
 import com.nameisjayant.bottombar.bead.BeadBottomBar
 import com.nameisjayant.bottombar.bead.BeadBottomBarDefaults
+import com.nameisjayant.bottombar.bloom.BloomBarItem
+import com.nameisjayant.bottombar.bloom.BloomBottomBar
+import com.nameisjayant.bottombar.bloom.BloomBottomBarDefaults
 import com.nameisjayant.bottombar.buoy.BuoyBarItem
 import com.nameisjayant.bottombar.buoy.BuoyBottomBar
 import com.nameisjayant.bottombar.buoy.BuoyBottomBarDefaults
@@ -342,6 +345,13 @@ private fun BottomBarPreview(type: BottomBarType, darkTheme: Boolean, onClick: (
             colors = BuoyBottomBarDefaults.colors(darkTheme),
             windowInsets = WindowInsets(0.dp),
         )
+        BottomBarType.Bloom -> BloomBottomBar(
+            items = BloomPreviewItems,
+            selectedIndex = 0,
+            onItemClick = { onClick() },
+            colors = BloomBottomBarDefaults.colors(darkTheme),
+            windowInsets = WindowInsets(0.dp),
+        )
     }
 }
 
@@ -419,3 +429,8 @@ private val CollarPreviewItems = HaloPreviewItems.map { CollarBarItem(it.label, 
 private val BuoyPreviewItems = HaloPreviewItems
     .filter { it.label != "Store" }
     .map { BuoyBarItem(it.label, it.icon, it.selectedIcon) }
+
+// Bloom shows the selected label beside its orb, so it uses the four tabs it was designed with.
+private val BloomPreviewItems = HaloPreviewItems
+    .filter { it.label != "Store" }
+    .map { BloomBarItem(it.label, it.icon, it.selectedIcon) }

@@ -314,11 +314,25 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
   </tr>
 </table>
 
+<table>
+  <tr>
+    <th colspan="2">Bloom BottomBar</th>
+  </tr>
+  <tr>
+    <td align="center" width="50%">☀️ Light</td>
+    <td align="center" width="50%">🌙 Dark</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/gifs/bloom-light.gif" width="400" alt="Bloom bottom bar in light theme, switching between tabs" /></td>
+    <td valign="top"><img src="docs/gifs/bloom-dark.gif" width="400" alt="Bloom bottom bar in dark theme, switching between tabs" /></td>
+  </tr>
+</table>
+
 ## Features
 
 - 🎯 **Ready to use**: pass a list of items and the selected index, and you get a finished bar.
 - 🌗 **Light and dark built in**: every bar ships both palettes and follows the system theme by default.
-- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press, the Socket's gliding bubble, the Gable's bubble sliding along its roof line, the Diamond's quarter-turn spin, the Wave's rings filling into solid orbs, the Rail's rails growing around the selected tab, the Crest's orb popping up as its wings dip, the Scribble's loop drawing itself around the selected icon, the Bead hopping from notch to notch, the Peak's strip stretching from tab to tab, the Teardrop popping out of its pointed tip, the ring rippling out of the Orbit's orb, the Tile stretching as it slides from tab to tab, the Arch sinking into the bar's edge and springing up under the next tab, the Satellite dot circling its orb as it glides to the next tab, the Spotlight panel stretching and resizing to fit the next label, the comet sweeping around the Collar's ring or the Buoy diving under the edge and resurfacing below the next tab.
+- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press, the Socket's gliding bubble, the Gable's bubble sliding along its roof line, the Diamond's quarter-turn spin, the Wave's rings filling into solid orbs, the Rail's rails growing around the selected tab, the Crest's orb popping up as its wings dip, the Scribble's loop drawing itself around the selected icon, the Bead hopping from notch to notch, the Peak's strip stretching from tab to tab, the Teardrop popping out of its pointed tip, the ring rippling out of the Orbit's orb, the Tile stretching as it slides from tab to tab, the Arch sinking into the bar's edge and springing up under the next tab, the Satellite dot circling its orb as it glides to the next tab, the Spotlight panel stretching and resizing to fit the next label, the comet sweeping around the Collar's ring, the Buoy diving under the edge and resurfacing below the next tab or the Bloom orb blooming out of the icon as its label unrolls.
 - 🎨 **Customizable**: change any color through `XxxBottomBarDefaults.lightColors(...)` / `darkColors(...)`, plus label style and window insets.
 - ♿ **Accessible**: items are exposed as selectable tabs in a selectable group, so TalkBack reads them correctly.
 - 🪶 **Light dependencies**: only Compose UI, Foundation and Animation. No Material, icons or navigation library is forced on your app.
@@ -349,6 +363,7 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
 | **Spotlight** | `SpotlightBottomBar` | A floating, rounded bar of icon-only tabs. The selected tab sits in a tinted panel with an accent line along its top, its icon filled in and lifted over its label. The panel stretches as it slides to the next tab and resizes to fit its label |
 | **Collar** | `CollarBottomBar` | A flat bar with softly rounded top corners and a ringed center orb held in a collar that rises out of the top edge. Icons and labels always show; the selected tab fills in and turns the accent color, and a comet sweeps once around the orb's ring when it is selected |
 | **Buoy** | `BuoyBottomBar` | A floating pill of icon-only tabs. The selected icon fills in and lifts over its label, with a small buoy floating half-sunk in the bottom edge underneath. On a new selection the buoy dives below the edge, travels across and bobs back up under the new tab |
+| **Bloom** | `BloomBottomBar` | A flat bar of icon-only tabs. The selected icon fills in on an accent orb with its label beside it. On a new selection the orb blooms out of the icon with a little overshoot while the label unrolls, and the other tabs shift to make room |
 
 More bars are on the way.
 
@@ -1130,6 +1145,37 @@ Colors come from `BuoyBottomBarDefaults.colors(darkTheme)`, `lightColors(...)` a
 | `selectedContentColor` | Icon and label of the selected tab |
 | `unselectedContentColor` | Icons of the other tabs |
 | `buoyColor` | The buoy (defaults to `selectedContentColor`) |
+
+### Bloom bottom bar
+
+`BloomBarItem` has no center item: any tab can be selected. The bar only shows icons until a tab is selected; the selected one switches to its `selectedIcon` on an accent orb and shows its `label` beside it. The rest of the time `label` is read out by TalkBack.
+
+```kotlin
+val items = listOf(
+    BloomBarItem("Home", Icons.Outlined.Home, Icons.Filled.Home),
+    BloomBarItem("Wallet", Icons.Outlined.AccountBalanceWallet, Icons.Filled.AccountBalanceWallet),
+    BloomBarItem("Analysis", Icons.Outlined.PieChart, Icons.Filled.PieChart),
+    BloomBarItem("Profile", Icons.Outlined.Person, Icons.Filled.Person),
+)
+
+BloomBottomBar(
+    items = items,
+    selectedIndex = selectedIndex,
+    onItemClick = { selectedIndex = it },
+)
+```
+
+The bar is a flat, full-width `BarHeight` (72dp) strip. Tabs are spread edge to edge inside `ContentPadding` (24dp each side), so they shift over as the selected label unrolls. The orb is `OrbSize` (40dp) and the label sits `LabelSpacing` (8dp) from it.
+
+Colors come from `BloomBottomBarDefaults.colors(darkTheme)`, `lightColors(...)` and `darkColors(...)`:
+
+| Color | Used for |
+|---|---|
+| `containerColor` | The bar |
+| `orbColor` | The orb behind the selected icon |
+| `orbContentColor` | The selected icon |
+| `unselectedContentColor` | Icons of the other tabs |
+| `labelColor` | The selected label (defaults to `orbColor`) |
 
 ### With Navigation 3
 

@@ -86,4 +86,8 @@ enum class BottomBarType(val title: String, val description: String) {
         title = "BuoyBottomBar",
         description = "Floating pill whose selected icon lifts over its label, with a buoy in the bottom edge that dives and resurfaces under the next tab.",
     ),
+    Bloom(
+        title = "BloomBottomBar",
+        description = "Flat bar whose selected icon fills in on an accent orb that blooms out of it, with its label unrolling beside it.",
+    ),
 }

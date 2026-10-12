@@ -14,6 +14,7 @@ import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import com.nameisjayant.composebottombar.arch.ArchBottomBarDemo
 import com.nameisjayant.composebottombar.bead.BeadBottomBarDemo
+import com.nameisjayant.composebottombar.bloom.BloomBottomBarDemo
 import com.nameisjayant.composebottombar.buoy.BuoyBottomBarDemo
 import com.nameisjayant.composebottombar.collar.CollarBottomBarDemo
 import com.nameisjayant.composebottombar.cradle.CradleBottomBarDemo
@@ -60,6 +61,7 @@ import kotlinx.serialization.Serializable
 @Serializable data object SpotlightDemoRoute : NavKey
 @Serializable data object CollarDemoRoute : NavKey
 @Serializable data object BuoyDemoRoute : NavKey
+@Serializable data object BloomDemoRoute : NavKey
 
 private fun BottomBarType.route(): NavKey = when (this) {
     BottomBarType.Halo -> HaloDemoRoute
@@ -83,6 +85,7 @@ private fun BottomBarType.route(): NavKey = when (this) {
     BottomBarType.Spotlight -> SpotlightDemoRoute
     BottomBarType.Collar -> CollarDemoRoute
     BottomBarType.Buoy -> BuoyDemoRoute
+    BottomBarType.Bloom -> BloomDemoRoute
 }
 
 @Composable
@@ -172,6 +175,9 @@ fun AppNavigation(darkTheme: Boolean, onDarkThemeChange: (Boolean) -> Unit) {
             }
             entry<BuoyDemoRoute> {
                 BuoyBottomBarDemo(darkTheme = darkTheme, onDarkThemeChange = onDarkThemeChange)
+            }
+            entry<BloomDemoRoute> {
+                BloomBottomBarDemo(darkTheme = darkTheme, onDarkThemeChange = onDarkThemeChange)
             }
         },
     )
