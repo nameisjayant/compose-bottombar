@@ -78,4 +78,8 @@ enum class BottomBarType(val title: String, val description: String) {
         title = "SpotlightBottomBar",
         description = "Floating rounded bar where a tinted panel with an accent top line lights up the selected tab and stretches as it slides.",
     ),
+    Collar(
+        title = "CollarBottomBar",
+        description = "Bar with soft rounded corners and a ringed orb held in a collar; a comet sweeps around the ring when it is selected.",
+    ),
 }

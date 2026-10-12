@@ -21,6 +21,9 @@ import androidx.compose.ui.unit.dp
 import com.nameisjayant.bottombar.bead.BeadBarItem
 import com.nameisjayant.bottombar.bead.BeadBottomBar
 import com.nameisjayant.bottombar.bead.BeadBottomBarDefaults
+import com.nameisjayant.bottombar.collar.CollarBarItem
+import com.nameisjayant.bottombar.collar.CollarBottomBar
+import com.nameisjayant.bottombar.collar.CollarBottomBarDefaults
 import com.nameisjayant.bottombar.cradle.CradleBarItem
 import com.nameisjayant.bottombar.cradle.CradleBottomBar
 import com.nameisjayant.bottombar.cradle.CradleBottomBarDefaults
@@ -126,6 +129,8 @@ class RecordBottomBarGifs {
     private val spotlightItems = haloItems
         .filter { it.label != "Store" }
         .map { SpotlightBarItem(it.label, it.icon, it.selectedIcon) }
+
+    private val collarItems = haloItems.map { CollarBarItem(it.label, it.icon, it.selectedIcon) }
 
     private val cradleItems = haloItems.map { CradleBarItem(it.label, it.icon, it.selectedIcon) }
 
@@ -560,6 +565,24 @@ class RecordBottomBarGifs {
                 onItemClick = onItemClick,
                 modifier = Modifier.padding(start = 14.dp, end = 14.dp, bottom = 14.dp),
                 colors = SpotlightBottomBarDefaults.colors(darkTheme),
+                windowInsets = WindowInsets(0.dp),
+            )
+        }
+    }
+
+    @Test
+    fun collarLight() = recordCollar(darkTheme = false)
+
+    @Test
+    fun collarDark() = recordCollar(darkTheme = true)
+
+    private fun recordCollar(darkTheme: Boolean) {
+        record(name = if (darkTheme) "collar-dark" else "collar-light", darkTheme = darkTheme) { selectedIndex, onItemClick ->
+            CollarBottomBar(
+                items = collarItems,
+                selectedIndex = selectedIndex,
+                onItemClick = onItemClick,
+                colors = CollarBottomBarDefaults.colors(darkTheme),
                 windowInsets = WindowInsets(0.dp),
             )
         }
