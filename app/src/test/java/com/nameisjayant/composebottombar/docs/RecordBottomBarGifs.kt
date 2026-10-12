@@ -21,6 +21,9 @@ import androidx.compose.ui.unit.dp
 import com.nameisjayant.bottombar.bead.BeadBarItem
 import com.nameisjayant.bottombar.bead.BeadBottomBar
 import com.nameisjayant.bottombar.bead.BeadBottomBarDefaults
+import com.nameisjayant.bottombar.buoy.BuoyBarItem
+import com.nameisjayant.bottombar.buoy.BuoyBottomBar
+import com.nameisjayant.bottombar.buoy.BuoyBottomBarDefaults
 import com.nameisjayant.bottombar.collar.CollarBarItem
 import com.nameisjayant.bottombar.collar.CollarBottomBar
 import com.nameisjayant.bottombar.collar.CollarBottomBarDefaults
@@ -129,6 +132,11 @@ class RecordBottomBarGifs {
     private val spotlightItems = haloItems
         .filter { it.label != "Store" }
         .map { SpotlightBarItem(it.label, it.icon, it.selectedIcon) }
+
+    // Buoy shows the selected label under its icon, so it uses the four tabs it was designed with.
+    private val buoyItems = haloItems
+        .filter { it.label != "Store" }
+        .map { BuoyBarItem(it.label, it.icon, it.selectedIcon) }
 
     private val collarItems = haloItems.map { CollarBarItem(it.label, it.icon, it.selectedIcon) }
 
@@ -583,6 +591,29 @@ class RecordBottomBarGifs {
                 selectedIndex = selectedIndex,
                 onItemClick = onItemClick,
                 colors = CollarBottomBarDefaults.colors(darkTheme),
+                windowInsets = WindowInsets(0.dp),
+            )
+        }
+    }
+
+    @Test
+    fun buoyLight() = recordBuoy(darkTheme = false)
+
+    @Test
+    fun buoyDark() = recordBuoy(darkTheme = true)
+
+    private fun recordBuoy(darkTheme: Boolean) {
+        record(
+            name = if (darkTheme) "buoy-dark" else "buoy-light",
+            darkTheme = darkTheme,
+            tour = listOf(0, 1, 2, 3, 1, 0),
+        ) { selectedIndex, onItemClick ->
+            BuoyBottomBar(
+                items = buoyItems,
+                selectedIndex = selectedIndex,
+                onItemClick = onItemClick,
+                modifier = Modifier.padding(start = 14.dp, end = 14.dp, bottom = 14.dp),
+                colors = BuoyBottomBarDefaults.colors(darkTheme),
                 windowInsets = WindowInsets(0.dp),
             )
         }

@@ -36,6 +36,9 @@ import androidx.lifecycle.compose.dropUnlessResumed
 import com.nameisjayant.bottombar.bead.BeadBarItem
 import com.nameisjayant.bottombar.bead.BeadBottomBar
 import com.nameisjayant.bottombar.bead.BeadBottomBarDefaults
+import com.nameisjayant.bottombar.buoy.BuoyBarItem
+import com.nameisjayant.bottombar.buoy.BuoyBottomBar
+import com.nameisjayant.bottombar.buoy.BuoyBottomBarDefaults
 import com.nameisjayant.bottombar.collar.CollarBarItem
 import com.nameisjayant.bottombar.collar.CollarBottomBar
 import com.nameisjayant.bottombar.collar.CollarBottomBarDefaults
@@ -331,6 +334,14 @@ private fun BottomBarPreview(type: BottomBarType, darkTheme: Boolean, onClick: (
             colors = CollarBottomBarDefaults.colors(darkTheme),
             windowInsets = WindowInsets(0.dp),
         )
+        BottomBarType.Buoy -> BuoyBottomBar(
+            items = BuoyPreviewItems,
+            selectedIndex = 0,
+            onItemClick = { onClick() },
+            modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
+            colors = BuoyBottomBarDefaults.colors(darkTheme),
+            windowInsets = WindowInsets(0.dp),
+        )
     }
 }
 
@@ -403,3 +414,8 @@ private val SpotlightPreviewItems = HaloPreviewItems
     .map { SpotlightBarItem(it.label, it.icon, it.selectedIcon) }
 
 private val CollarPreviewItems = HaloPreviewItems.map { CollarBarItem(it.label, it.icon, it.selectedIcon) }
+
+// Buoy shows the selected label under its icon, so it uses the four tabs it was designed with.
+private val BuoyPreviewItems = HaloPreviewItems
+    .filter { it.label != "Store" }
+    .map { BuoyBarItem(it.label, it.icon, it.selectedIcon) }
