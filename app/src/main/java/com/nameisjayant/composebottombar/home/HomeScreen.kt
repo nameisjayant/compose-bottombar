@@ -84,6 +84,9 @@ import com.nameisjayant.bottombar.tile.TileBottomBarDefaults
 import com.nameisjayant.bottombar.arch.ArchBarItem
 import com.nameisjayant.bottombar.arch.ArchBottomBar
 import com.nameisjayant.bottombar.arch.ArchBottomBarDefaults
+import com.nameisjayant.bottombar.satellite.SatelliteBarItem
+import com.nameisjayant.bottombar.satellite.SatelliteBottomBar
+import com.nameisjayant.bottombar.satellite.SatelliteBottomBarDefaults
 import com.nameisjayant.composebottombar.halo.ShopIcons
 
 /** Catalog of every bottom bar. Tapping a card opens that bar's full demo. */
@@ -300,6 +303,13 @@ private fun BottomBarPreview(type: BottomBarType, darkTheme: Boolean, onClick: (
             colors = ArchBottomBarDefaults.colors(darkTheme),
             windowInsets = WindowInsets(0.dp),
         )
+        BottomBarType.Satellite -> SatelliteBottomBar(
+            items = SatellitePreviewItems,
+            selectedIndex = 0,
+            onItemClick = { onClick() },
+            colors = SatelliteBottomBarDefaults.colors(darkTheme),
+            windowInsets = WindowInsets(0.dp),
+        )
     }
 }
 
@@ -360,3 +370,8 @@ private val OrbitPreviewItems = HaloPreviewItems.map { OrbitBarItem(it.label, it
 private val TilePreviewItems = HaloPreviewItems.map { TileBarItem(it.label, it.icon, it.selectedIcon) }
 
 private val ArchPreviewItems = HaloPreviewItems.map { ArchBarItem(it.label, it.icon, it.selectedIcon) }
+
+// Satellite was designed with four tabs, so it skips Store.
+private val SatellitePreviewItems = HaloPreviewItems
+    .filter { it.label != "Store" }
+    .map { SatelliteBarItem(it.label, it.icon, it.selectedIcon) }

@@ -70,4 +70,8 @@ enum class BottomBarType(val title: String, val description: String) {
         title = "ArchBottomBar",
         description = "Flat bar where an accent arch rises from the bottom edge behind the selected icon, sinking and gliding to the next tab.",
     ),
+    Satellite(
+        title = "SatelliteBottomBar",
+        description = "Flat bar where an accent orb glides to the selected icon while a small satellite dot circles it once on the way.",
+    ),
 }

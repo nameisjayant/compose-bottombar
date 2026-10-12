@@ -69,6 +69,9 @@ import com.nameisjayant.bottombar.tile.TileBottomBarDefaults
 import com.nameisjayant.bottombar.arch.ArchBarItem
 import com.nameisjayant.bottombar.arch.ArchBottomBar
 import com.nameisjayant.bottombar.arch.ArchBottomBarDefaults
+import com.nameisjayant.bottombar.satellite.SatelliteBarItem
+import com.nameisjayant.bottombar.satellite.SatelliteBottomBar
+import com.nameisjayant.bottombar.satellite.SatelliteBottomBarDefaults
 import com.nameisjayant.composebottombar.halo.ShopIcons
 import java.io.File
 import org.junit.Assume.assumeTrue
@@ -110,6 +113,11 @@ class RecordBottomBarGifs {
     private val tileItems = haloItems.map { TileBarItem(it.label, it.icon, it.selectedIcon) }
 
     private val archItems = haloItems.map { ArchBarItem(it.label, it.icon, it.selectedIcon) }
+
+    // Satellite was designed with four tabs, so it skips Store.
+    private val satelliteItems = haloItems
+        .filter { it.label != "Store" }
+        .map { SatelliteBarItem(it.label, it.icon, it.selectedIcon) }
 
     private val cradleItems = haloItems.map { CradleBarItem(it.label, it.icon, it.selectedIcon) }
 
@@ -497,6 +505,29 @@ class RecordBottomBarGifs {
                 selectedIndex = selectedIndex,
                 onItemClick = onItemClick,
                 colors = ArchBottomBarDefaults.colors(darkTheme),
+                shadowElevation = if (darkTheme) 0.dp else 8.dp,
+                windowInsets = WindowInsets(0.dp),
+            )
+        }
+    }
+
+    @Test
+    fun satelliteLight() = recordSatellite(darkTheme = false)
+
+    @Test
+    fun satelliteDark() = recordSatellite(darkTheme = true)
+
+    private fun recordSatellite(darkTheme: Boolean) {
+        record(
+            name = if (darkTheme) "satellite-dark" else "satellite-light",
+            darkTheme = darkTheme,
+            tour = listOf(0, 1, 2, 3, 1, 0),
+        ) { selectedIndex, onItemClick ->
+            SatelliteBottomBar(
+                items = satelliteItems,
+                selectedIndex = selectedIndex,
+                onItemClick = onItemClick,
+                colors = SatelliteBottomBarDefaults.colors(darkTheme),
                 shadowElevation = if (darkTheme) 0.dp else 8.dp,
                 windowInsets = WindowInsets(0.dp),
             )
