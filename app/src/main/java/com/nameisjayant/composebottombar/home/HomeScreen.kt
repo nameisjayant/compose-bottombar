@@ -81,6 +81,9 @@ import com.nameisjayant.bottombar.teardrop.TeardropBottomBarDefaults
 import com.nameisjayant.bottombar.tile.TileBarItem
 import com.nameisjayant.bottombar.tile.TileBottomBar
 import com.nameisjayant.bottombar.tile.TileBottomBarDefaults
+import com.nameisjayant.bottombar.arch.ArchBarItem
+import com.nameisjayant.bottombar.arch.ArchBottomBar
+import com.nameisjayant.bottombar.arch.ArchBottomBarDefaults
 import com.nameisjayant.composebottombar.halo.ShopIcons
 
 /** Catalog of every bottom bar. Tapping a card opens that bar's full demo. */
@@ -290,6 +293,13 @@ private fun BottomBarPreview(type: BottomBarType, darkTheme: Boolean, onClick: (
             colors = TileBottomBarDefaults.colors(darkTheme),
             windowInsets = WindowInsets(0.dp),
         )
+        BottomBarType.Arch -> ArchBottomBar(
+            items = ArchPreviewItems,
+            selectedIndex = 0,
+            onItemClick = { onClick() },
+            colors = ArchBottomBarDefaults.colors(darkTheme),
+            windowInsets = WindowInsets(0.dp),
+        )
     }
 }
 
@@ -348,3 +358,5 @@ private val TeardropPreviewItems = HaloPreviewItems
 private val OrbitPreviewItems = HaloPreviewItems.map { OrbitBarItem(it.label, it.icon, it.selectedIcon) }
 
 private val TilePreviewItems = HaloPreviewItems.map { TileBarItem(it.label, it.icon, it.selectedIcon) }
+
+private val ArchPreviewItems = HaloPreviewItems.map { ArchBarItem(it.label, it.icon, it.selectedIcon) }

@@ -66,6 +66,9 @@ import com.nameisjayant.bottombar.teardrop.TeardropBottomBarDefaults
 import com.nameisjayant.bottombar.tile.TileBarItem
 import com.nameisjayant.bottombar.tile.TileBottomBar
 import com.nameisjayant.bottombar.tile.TileBottomBarDefaults
+import com.nameisjayant.bottombar.arch.ArchBarItem
+import com.nameisjayant.bottombar.arch.ArchBottomBar
+import com.nameisjayant.bottombar.arch.ArchBottomBarDefaults
 import com.nameisjayant.composebottombar.halo.ShopIcons
 import java.io.File
 import org.junit.Assume.assumeTrue
@@ -105,6 +108,8 @@ class RecordBottomBarGifs {
     private val orbitItems = haloItems.map { OrbitBarItem(it.label, it.icon, it.selectedIcon) }
 
     private val tileItems = haloItems.map { TileBarItem(it.label, it.icon, it.selectedIcon) }
+
+    private val archItems = haloItems.map { ArchBarItem(it.label, it.icon, it.selectedIcon) }
 
     private val cradleItems = haloItems.map { CradleBarItem(it.label, it.icon, it.selectedIcon) }
 
@@ -473,6 +478,25 @@ class RecordBottomBarGifs {
                 selectedIndex = selectedIndex,
                 onItemClick = onItemClick,
                 colors = TileBottomBarDefaults.colors(darkTheme),
+                shadowElevation = if (darkTheme) 0.dp else 8.dp,
+                windowInsets = WindowInsets(0.dp),
+            )
+        }
+    }
+
+    @Test
+    fun archLight() = recordArch(darkTheme = false)
+
+    @Test
+    fun archDark() = recordArch(darkTheme = true)
+
+    private fun recordArch(darkTheme: Boolean) {
+        record(name = if (darkTheme) "arch-dark" else "arch-light", darkTheme = darkTheme) { selectedIndex, onItemClick ->
+            ArchBottomBar(
+                items = archItems,
+                selectedIndex = selectedIndex,
+                onItemClick = onItemClick,
+                colors = ArchBottomBarDefaults.colors(darkTheme),
                 shadowElevation = if (darkTheme) 0.dp else 8.dp,
                 windowInsets = WindowInsets(0.dp),
             )

@@ -66,4 +66,8 @@ enum class BottomBarType(val title: String, val description: String) {
         title = "TileBottomBar",
         description = "Flat, square bar where an accent tile fills the selected tab and stretches as it slides to the next.",
     ),
+    Arch(
+        title = "ArchBottomBar",
+        description = "Flat bar where an accent arch rises from the bottom edge behind the selected icon, sinking and gliding to the next tab.",
+    ),
 }

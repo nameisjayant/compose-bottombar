@@ -12,6 +12,7 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import com.nameisjayant.composebottombar.arch.ArchBottomBarDemo
 import com.nameisjayant.composebottombar.bead.BeadBottomBarDemo
 import com.nameisjayant.composebottombar.cradle.CradleBottomBarDemo
 import com.nameisjayant.composebottombar.crest.CrestBottomBarDemo
@@ -50,6 +51,7 @@ import kotlinx.serialization.Serializable
 @Serializable data object TeardropDemoRoute : NavKey
 @Serializable data object OrbitDemoRoute : NavKey
 @Serializable data object TileDemoRoute : NavKey
+@Serializable data object ArchDemoRoute : NavKey
 
 private fun BottomBarType.route(): NavKey = when (this) {
     BottomBarType.Halo -> HaloDemoRoute
@@ -68,6 +70,7 @@ private fun BottomBarType.route(): NavKey = when (this) {
     BottomBarType.Teardrop -> TeardropDemoRoute
     BottomBarType.Orbit -> OrbitDemoRoute
     BottomBarType.Tile -> TileDemoRoute
+    BottomBarType.Arch -> ArchDemoRoute
 }
 
 @Composable
@@ -142,6 +145,9 @@ fun AppNavigation(darkTheme: Boolean, onDarkThemeChange: (Boolean) -> Unit) {
             }
             entry<TileDemoRoute> {
                 TileBottomBarDemo(darkTheme = darkTheme, onDarkThemeChange = onDarkThemeChange)
+            }
+            entry<ArchDemoRoute> {
+                ArchBottomBarDemo(darkTheme = darkTheme, onDarkThemeChange = onDarkThemeChange)
             }
         },
     )
