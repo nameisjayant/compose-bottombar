@@ -74,4 +74,8 @@ enum class BottomBarType(val title: String, val description: String) {
         title = "SatelliteBottomBar",
         description = "Flat bar where an accent orb glides to the selected icon while a small satellite dot circles it once on the way.",
     ),
+    Spotlight(
+        title = "SpotlightBottomBar",
+        description = "Floating rounded bar where a tinted panel with an accent top line lights up the selected tab and stretches as it slides.",
+    ),
 }

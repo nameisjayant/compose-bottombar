@@ -72,6 +72,9 @@ import com.nameisjayant.bottombar.arch.ArchBottomBarDefaults
 import com.nameisjayant.bottombar.satellite.SatelliteBarItem
 import com.nameisjayant.bottombar.satellite.SatelliteBottomBar
 import com.nameisjayant.bottombar.satellite.SatelliteBottomBarDefaults
+import com.nameisjayant.bottombar.spotlight.SpotlightBarItem
+import com.nameisjayant.bottombar.spotlight.SpotlightBottomBar
+import com.nameisjayant.bottombar.spotlight.SpotlightBottomBarDefaults
 import com.nameisjayant.composebottombar.halo.ShopIcons
 import java.io.File
 import org.junit.Assume.assumeTrue
@@ -118,6 +121,11 @@ class RecordBottomBarGifs {
     private val satelliteItems = haloItems
         .filter { it.label != "Store" }
         .map { SatelliteBarItem(it.label, it.icon, it.selectedIcon) }
+
+    // Spotlight shows the selected label under its icon, so it uses the four tabs it was designed with.
+    private val spotlightItems = haloItems
+        .filter { it.label != "Store" }
+        .map { SpotlightBarItem(it.label, it.icon, it.selectedIcon) }
 
     private val cradleItems = haloItems.map { CradleBarItem(it.label, it.icon, it.selectedIcon) }
 
@@ -529,6 +537,29 @@ class RecordBottomBarGifs {
                 onItemClick = onItemClick,
                 colors = SatelliteBottomBarDefaults.colors(darkTheme),
                 shadowElevation = if (darkTheme) 0.dp else 8.dp,
+                windowInsets = WindowInsets(0.dp),
+            )
+        }
+    }
+
+    @Test
+    fun spotlightLight() = recordSpotlight(darkTheme = false)
+
+    @Test
+    fun spotlightDark() = recordSpotlight(darkTheme = true)
+
+    private fun recordSpotlight(darkTheme: Boolean) {
+        record(
+            name = if (darkTheme) "spotlight-dark" else "spotlight-light",
+            darkTheme = darkTheme,
+            tour = listOf(0, 1, 2, 3, 1, 0),
+        ) { selectedIndex, onItemClick ->
+            SpotlightBottomBar(
+                items = spotlightItems,
+                selectedIndex = selectedIndex,
+                onItemClick = onItemClick,
+                modifier = Modifier.padding(start = 14.dp, end = 14.dp, bottom = 14.dp),
+                colors = SpotlightBottomBarDefaults.colors(darkTheme),
                 windowInsets = WindowInsets(0.dp),
             )
         }

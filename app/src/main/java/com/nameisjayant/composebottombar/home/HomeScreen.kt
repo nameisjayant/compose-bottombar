@@ -87,6 +87,9 @@ import com.nameisjayant.bottombar.arch.ArchBottomBarDefaults
 import com.nameisjayant.bottombar.satellite.SatelliteBarItem
 import com.nameisjayant.bottombar.satellite.SatelliteBottomBar
 import com.nameisjayant.bottombar.satellite.SatelliteBottomBarDefaults
+import com.nameisjayant.bottombar.spotlight.SpotlightBarItem
+import com.nameisjayant.bottombar.spotlight.SpotlightBottomBar
+import com.nameisjayant.bottombar.spotlight.SpotlightBottomBarDefaults
 import com.nameisjayant.composebottombar.halo.ShopIcons
 
 /** Catalog of every bottom bar. Tapping a card opens that bar's full demo. */
@@ -310,6 +313,14 @@ private fun BottomBarPreview(type: BottomBarType, darkTheme: Boolean, onClick: (
             colors = SatelliteBottomBarDefaults.colors(darkTheme),
             windowInsets = WindowInsets(0.dp),
         )
+        BottomBarType.Spotlight -> SpotlightBottomBar(
+            items = SpotlightPreviewItems,
+            selectedIndex = 0,
+            onItemClick = { onClick() },
+            modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
+            colors = SpotlightBottomBarDefaults.colors(darkTheme),
+            windowInsets = WindowInsets(0.dp),
+        )
     }
 }
 
@@ -375,3 +386,8 @@ private val ArchPreviewItems = HaloPreviewItems.map { ArchBarItem(it.label, it.i
 private val SatellitePreviewItems = HaloPreviewItems
     .filter { it.label != "Store" }
     .map { SatelliteBarItem(it.label, it.icon, it.selectedIcon) }
+
+// Spotlight shows the selected label under its icon, so it uses the four tabs it was designed with.
+private val SpotlightPreviewItems = HaloPreviewItems
+    .filter { it.label != "Store" }
+    .map { SpotlightBarItem(it.label, it.icon, it.selectedIcon) }

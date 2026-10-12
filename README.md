@@ -272,11 +272,25 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
   </tr>
 </table>
 
+<table>
+  <tr>
+    <th colspan="2">Spotlight BottomBar</th>
+  </tr>
+  <tr>
+    <td align="center" width="50%">☀️ Light</td>
+    <td align="center" width="50%">🌙 Dark</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/gifs/spotlight-light.gif" width="400" alt="Spotlight bottom bar in light theme, switching between tabs" /></td>
+    <td valign="top"><img src="docs/gifs/spotlight-dark.gif" width="400" alt="Spotlight bottom bar in dark theme, switching between tabs" /></td>
+  </tr>
+</table>
+
 ## Features
 
 - 🎯 **Ready to use**: pass a list of items and the selected index, and you get a finished bar.
 - 🌗 **Light and dark built in**: every bar ships both palettes and follows the system theme by default.
-- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press, the Socket's gliding bubble, the Gable's bubble sliding along its roof line, the Diamond's quarter-turn spin, the Wave's rings filling into solid orbs, the Rail's rails growing around the selected tab, the Crest's orb popping up as its wings dip, the Scribble's loop drawing itself around the selected icon, the Bead hopping from notch to notch, the Peak's strip stretching from tab to tab, the Teardrop popping out of its pointed tip, the ring rippling out of the Orbit's orb, the Tile stretching as it slides from tab to tab, the Arch sinking into the bar's edge and springing up under the next tab or the Satellite dot circling its orb as it glides to the next tab.
+- ✨ **Animated by default**: icon swaps, spring bounces, color fades and bar-specific touches like the Halo burst, the Dome's sliding labels, the Cradle's orb ripple, the Valley's orb press, the Socket's gliding bubble, the Gable's bubble sliding along its roof line, the Diamond's quarter-turn spin, the Wave's rings filling into solid orbs, the Rail's rails growing around the selected tab, the Crest's orb popping up as its wings dip, the Scribble's loop drawing itself around the selected icon, the Bead hopping from notch to notch, the Peak's strip stretching from tab to tab, the Teardrop popping out of its pointed tip, the ring rippling out of the Orbit's orb, the Tile stretching as it slides from tab to tab, the Arch sinking into the bar's edge and springing up under the next tab, the Satellite dot circling its orb as it glides to the next tab or the Spotlight panel stretching and resizing to fit the next label.
 - 🎨 **Customizable**: change any color through `XxxBottomBarDefaults.lightColors(...)` / `darkColors(...)`, plus label style and window insets.
 - ♿ **Accessible**: items are exposed as selectable tabs in a selectable group, so TalkBack reads them correctly.
 - 🪶 **Light dependencies**: only Compose UI, Foundation and Animation. No Material, icons or navigation library is forced on your app.
@@ -304,6 +318,7 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
 | **Tile** | `TileBottomBar` | A flat, square-cornered bar of icon-only tabs. An accent tile fills the selected tab edge to edge, its icon fills in over a small dot, and the tile stretches as it slides to the next tab |
 | **Arch** | `ArchBottomBar` | A flat bar of icon-only tabs. An accent arch, flat at the bottom and round on top, rises out of the bottom edge behind the selected icon, which fills in inside it. On a new selection the arch sinks, glides to the new tab and springs back up |
 | **Satellite** | `SatelliteBottomBar` | A flat bar of icon-only tabs. The selected icon fills in inside an accent orb with a small satellite dot parked off its top-end side. On a new selection the orb glides to the new tab while the satellite circles it once |
+| **Spotlight** | `SpotlightBottomBar` | A floating, rounded bar of icon-only tabs. The selected tab sits in a tinted panel with an accent line along its top, its icon filled in and lifted over its label. The panel stretches as it slides to the next tab and resizes to fit its label |
 
 More bars are on the way.
 
@@ -985,6 +1000,38 @@ Colors come from `SatelliteBottomBarDefaults.colors(darkTheme)`, `lightColors(..
 | `indicatorColor` | The orb behind the selected tab |
 | `satelliteColor` | The satellite dot (defaults to `indicatorColor`) |
 | `selectedContentColor` | Icon inside the orb (white by default) |
+| `unselectedContentColor` | Icons of the other tabs |
+
+### Spotlight bottom bar
+
+`SpotlightBarItem` has no center item: any tab can be selected, and every slot gets the same width. The bar only shows icons until a tab is selected; the selected one switches to its `selectedIcon`, lifts it and shows its `label` underneath. The rest of the time `label` is read out by TalkBack.
+
+```kotlin
+val items = listOf(
+    SpotlightBarItem("Home", Icons.Outlined.Home, Icons.Filled.Home),
+    SpotlightBarItem("Wallet", Icons.Outlined.AccountBalanceWallet, Icons.Filled.AccountBalanceWallet),
+    SpotlightBarItem("Analysis", Icons.Outlined.PieChart, Icons.Filled.PieChart),
+    SpotlightBarItem("Profile", Icons.Outlined.Person, Icons.Filled.Person),
+)
+
+SpotlightBottomBar(
+    items = items,
+    selectedIndex = selectedIndex,
+    onItemClick = { selectedIndex = it },
+    modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+)
+```
+
+The bar is `BarHeight` (68dp) tall with `CornerRadius` (16dp) corners, and has no outer margin of its own, so pass one through `modifier`. The panel behind the selected tab fits its label plus `IndicatorPadding` (18dp) on each side, is never narrower than `MinIndicatorWidth` (64dp), and stops `IndicatorInset` (2dp) short of the top and bottom edges. An `AccentThickness` (2dp) accent line runs along its top. When the selection changes, the panel's edge facing the new tab moves first and the other catches up, so it stretches on the way, then resizes to the new label. The outline is convex, so `shadowElevation` works on every API level.
+
+Colors come from `SpotlightBottomBarDefaults.colors(darkTheme)`, `lightColors(...)` and `darkColors(...)`:
+
+| Color | Used for |
+|---|---|
+| `containerColor` | The bar |
+| `indicatorColor` | The tinted panel behind the selected tab |
+| `accentColor` | The line along the top of the panel |
+| `selectedContentColor` | Icon and label of the selected tab (defaults to `accentColor`) |
 | `unselectedContentColor` | Icons of the other tabs |
 
 ### With Navigation 3
