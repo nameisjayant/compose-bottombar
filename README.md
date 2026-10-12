@@ -13,6 +13,9 @@ Drop one in, pass your items, and get a polished bar that looks right in light a
 ![Min SDK](https://img.shields.io/badge/minSdk-24-3DDC84?logo=android&logoColor=white)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.nameisjayant/compose-bottombar?color=5B3CE0)](https://central.sonatype.com/artifact/io.github.nameisjayant/compose-bottombar)
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue)
+[![Docs](https://img.shields.io/badge/docs-website-5B3CE0?logo=readthedocs&logoColor=white)](https://nameisjayant.github.io/compose-bottombar-docs/)
+
+📖 **[Read the full documentation →](https://nameisjayant.github.io/compose-bottombar-docs/)**
 
 </div>
 
